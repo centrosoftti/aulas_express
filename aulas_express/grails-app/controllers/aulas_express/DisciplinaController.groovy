@@ -1,158 +1,108 @@
 package aulas_express
 
-import grails.converters.JSON
-//	import grails.plugin.springsecurity.annotation.Secured
 
-//	@Secured(['ROLE_ADMIN', 'ROLE_PROF', 'ROLE_USER'])
+
+import static org.springframework.http.HttpStatus.*
+import grails.plugin.springsecurity.annotation.Secured
+import grails.transaction.Transactional
+
+@Transactional(readOnly = true)
 class DisciplinaController {
 
-//    def index() {
-//		render "Eu sou o cara!"
-//	}
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-//@Secured('ROLE_ADMIN')
-	def save = {
-		println "\n\n Entrei na funcao salvar Disciplina..."
-		println request.method
-		println "\n\n Params:\n ${params}\n\n"
-		
-		def json = JSON.parse(request)
+	@Secured(['ROLE_USER'])
+    def index(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        respond Disciplina.list(params), model:[disciplinaInstanceCount: Disciplina.count()]
+    }
 
-		println json
-		
-		def disciplina = new Disciplina(json.data)
-				
-		if(disciplina.save())
-		{
-			println "\n\n Salva a Disciplina"
-		
-			response.status = 201
-			def jsonResponse = ['response':['status':0,'data':disciplina]]
-			render jsonResponse as JSON
-			
-			println jsonResponse
-		}
-		else
-		{
-			def errorsJson = [:]
-			disciplina.errors.allErrors.each {err ->
-				errorsJson.put("${err.field}",["errorMessage":err.defaultMessage])
-			}
-			
-			def jsonResponse = ['response':['status':-4,'errors':errorsJson]]
-			
-			render jsonResponse as JSON
-			
-			println jsonResponse
-		}
-		
-	}
-	
-	//recuperar /buscar
-//	@Secured(['ROLE_ADMIN', 'ROLE_FUNC'])
-	def show = {
-		println "\n\n Entrei no show da Disciplina"
-		println request.method
-		println "Params: ${params}"
-		
-		
-		def disciplina = null
-		if(params.id)
-		{
-			println "Vou pesquisar Disciplina por id ${params.id}"
-			disciplina = Disciplina.get(params.id)
-		}
-		else if(params.nome)
-		{
-			println "Vou pesquisar Disciplina..."
-			
-			def a = Disciplina.createCriteria()
-			disciplina = a{
-				
-				if (params.nome)
-					ilike("nome", "%${params.nome}%")
-									
-			}
-		}
-		else
-		{
-			println "Vou pesquisar todas as Disciplinas..."
-			disciplina = Disciplina.getAll()
-		}
-		
-		println "\n\n Disciplinas encontradas: ${disciplina} \n\n"
-		
-		def jsonResponse = ['response':['status':0,'data':disciplina]]
-		println "\n\n Disciplina como JSONRESPONSE: ${jsonResponse} \n\n"
-		render jsonResponse as JSON
-		return
-	}
-	
-	//update
-//	@Secured(['ROLE_ADMIN', 'ROLE_FUNC'])
-	def update = {
-		println "\n\n Entrei no update de Disciplina..."
-		println request.method
-		println "\n\n Params:\n ${params}\n"
-		
-		def json = JSON.parse (request)
-		println json
-		
-		def disciplina = Disciplina.get(json.data.id)
-		
-		if (disciplina)
-		{
-			disciplina.properties = json.data
-			
-			if (disciplina.save())
-			{
-				response.status = 200 //ok
-				def jsonResponse = ['response':['status':0,'data':disciplina]]
-				render jsonResponse as JSON
-			}
-			else
-			{
-				//Todo processar menssagens de erro com os parametros
-				def errorsJson = [:]
-				
-				disciplina.errors.allErrors.each {err ->
-					errorsJson.put("${err.field}",["errorMessage":err.defaultMessage])
-				}
-				
-				def jsonResponse = ['response':['status':-4,'errors':errorsJson]]
-				render jsonResponse as JSON
-			}
-		}
-	}
-	
-	//delete
-//	@Secured(['ROLE_ADMIN', 'ROLE_FUNC'])
-	def delete = {
-		
-		println "\n\n Entrei no delete da Disciplina..."
-		println request.method
-		println "\n\n Params:\n ${params}"
-		
-		if(params.id)
-		{
-			def disciplina = Disciplina.get(params.id)
-			
-			//Verifica se foi encontrado algum Disciplina
-			if (!disciplina)
-			{
-				response.status = 404 //Not Found
-				render "Disciplina com id ${params.id} nao encontrado"
-				return
-			}
-			
-			disciplina.delete()
-			
-			def jsonResponse = ['response':['status':0,'data':disciplina]]
-			render jsonResponse as JSON
-			return
-		}
-		
-		response.status = 400 //Bad request
-		render "Parametros invalidos. Informe o id da Disciplina."
-	}
+	@Secured(['ROLE_USER'])
+    def show(Disciplina disciplinaInstance) {
+        respond disciplinaInstance
+    }
+
+	@Secured(['ROLE_USER'])
+    def create() {
+        respond new Disciplina(params)
+    }
+
+    @Transactional
+    def save(Disciplina disciplinaInstance) {
+        if (disciplinaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (disciplinaInstance.hasErrors()) {
+            respond disciplinaInstance.errors, view:'create'
+            return
+        }
+
+        disciplinaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'disciplina.label', default: 'Disciplina'), disciplinaInstance.id])
+                redirect disciplinaInstance
+            }
+            '*' { respond disciplinaInstance, [status: CREATED] }
+        }
+    }
+
+    def edit(Disciplina disciplinaInstance) {
+        respond disciplinaInstance
+    }
+
+    @Transactional
+    def update(Disciplina disciplinaInstance) {
+        if (disciplinaInstance == null) {
+            notFound()
+            return
+        }
+
+        if (disciplinaInstance.hasErrors()) {
+            respond disciplinaInstance.errors, view:'edit'
+            return
+        }
+
+        disciplinaInstance.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'Disciplina.label', default: 'Disciplina'), disciplinaInstance.id])
+                redirect disciplinaInstance
+            }
+            '*'{ respond disciplinaInstance, [status: OK] }
+        }
+    }
+
+    @Transactional
+    def delete(Disciplina disciplinaInstance) {
+
+        if (disciplinaInstance == null) {
+            notFound()
+            return
+        }
+
+        disciplinaInstance.delete flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Disciplina.label', default: 'Disciplina'), disciplinaInstance.id])
+                redirect action:"index", method:"GET"
+            }
+            '*'{ render status: NO_CONTENT }
+        }
+    }
+
+    protected void notFound() {
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'disciplina.label', default: 'Disciplina'), params.id])
+                redirect action: "index", method: "GET"
+            }
+            '*'{ render status: NOT_FOUND }
+        }
+    }
 }

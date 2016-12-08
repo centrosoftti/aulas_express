@@ -1,4 +1,7 @@
 import aulas_express.Disciplina
+import org.example.Perfil
+import org.example.Usuario
+import org.example.UsuarioPerfil
 
 class BootStrap {
 
@@ -14,7 +17,7 @@ class BootStrap {
 		
 		environments {
 			production {
-//				carregaDadosDeProducao();
+				carregaDadosDeProducao();
 			}
 			development {
 				carregaDadosDeDesenvolvimento();
@@ -35,22 +38,44 @@ class BootStrap {
 	}
 	
 	private void carregaDadosDeProducao(){
+		carregaDisciplinas();
+	}
+	
+	private void criarUsuarios()
+	{
+		println "Carregando usuarios..."
+				
+		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save(flush: true)
+		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save(flush: true)
+		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save(flush: true)
+		
+		
+		String password = springSecurityService.encodePassword('1234')
+			
+		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', last_name: 'Passos', password: '1234')
+		adminUser.save(flush: true)
+		
+		UsuarioPerfil.create(adminUser, adminPerfil, true)
+		
+		def professorUser = new Usuario(username: 'professor', enabled: true, email: 'professor@test.com', first_name: 'Jean', last_name: 'Travassos', password: '1234')
+		professorUser.save(flush: true)
+		
+		UsuarioPerfil.create(professorUser, professorPerfil, true)
+		
+
+		def usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
+		usuarioUser.save(flush: true)
+		
+		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
+		
+		assert Usuario.count() == 3
+		assert Perfil.count() == 3
+		assert UsuarioPerfil.count() == 3
+
+	}
+	
+	private void carregaDisciplinas(){
 		//Se for necessario dados especificos para producao, carregar aqui.
-		
-	//		carregaDadosDeDesenvolvimento();
-//		criarUsuarios();
-//		carregaDadosDeCredito();
-//		carregaDadosProfissionais();
-		
-	}
-	
-	private void carregarDadosFinaisParaTodosOsAmbientes(){
-		//Se for necessario criar dados apos a carga especifica de ambientes
-	}
-	
-	private void carregaDadosDeDesenvolvimento(){
-//		criarUsuarios();
-		
 		println "Carregando Disciplinas..."
 		
 		def disciplina1 = new Disciplina(
@@ -74,7 +99,48 @@ class BootStrap {
 		def disciplina7 = new Disciplina(
 			nome:"Inglês").save();
 		
-		assert Disciplina.count() == 7
-
+		def disciplina8 = new Disciplina(
+			nome:"Espanhol").save();
+		
+		def disciplina9 = new Disciplina(
+			nome:"Filosofia").save();
+		
+		def disciplina10 = new Disciplina(
+			nome:"Literatura").save();
+		
+		def disciplina11 = new Disciplina(
+			nome:"Artes Plásticas").save();
+		
+		def disciplina12 = new Disciplina(
+			nome:"Artes Visuais").save();
+		
+		def disciplina13 = new Disciplina(
+			nome:"Artes Cênicas").save();
+		
+		def disciplina14 = new Disciplina(
+			nome:"Redação").save();
+		
+		def disciplina15 = new Disciplina(
+			nome:"Educação Física").save();
+		
+		def disciplina16 = new Disciplina(
+			nome:"Biologia").save();
+		
+		assert Disciplina.count() == 16
+		
+	//		carregaDadosDeDesenvolvimento();
+//		criarUsuarios();
+//		carregaDadosDeCredito();
+//		carregaDadosProfissionais();
+		
+	}
+	
+	private void carregarDadosFinaisParaTodosOsAmbientes(){
+		//Se for necessario criar dados apos a carga especifica de ambientes
+	}
+	
+	private void carregaDadosDeDesenvolvimento(){
+		criarUsuarios();
+		carregaDisciplinas();
 	}
 }

@@ -10,6 +10,7 @@
 // if (System.properties["${appName}.config.location"]) {
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
+//import grails.plugins.springsecurity.SecurityConfigType
 
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
@@ -91,6 +92,7 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
+		grails.serverURL = "http://www.ctsoft.com.br/aulasexpress"
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
@@ -99,9 +101,10 @@ environments {
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
     //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+    appenders {
+        console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+		'null' name:'stacktrace'
+    }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
            'org.codehaus.groovy.grails.web.pages',          // GSP
@@ -115,3 +118,31 @@ log4j.main = {
            'org.hibernate',
            'net.sf.ehcache.hibernate'
 }
+
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.example.Usuario'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.example.UsuarioPerfil'
+grails.plugin.springsecurity.authority.className = 'org.example.Perfil'
+grails.plugin.springsecurity.controllerAnnotations.staticRules = [
+	
+	'/':                ['permitAll'],
+	'/index':           ['permitAll'],
+	'/index.gsp':       ['permitAll']
+//	'/*': ['ROLE_USER']
+//	'/assets/**':       ['permitAll'],
+//	'/**/js/**':        ['permitAll'],
+//	'/**/css/**':       ['permitAll'],
+//	'/**/images/**':    ['permitAll'],
+//	'/**/favicon.ico':  ['permitAll']
+]
+
+//grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
+//grails.plugins.springsecurity.interceptUrlMap = [
+//	'/timeline':         ['ROLE_USER'],
+//	'/person/*':         ['IS_AUTHENTICATED_REMEMBERED'],
+//	'/post/followAjax':  ['ROLE_USER'],
+//	'/post/addPostAjax': ['ROLE_USER', 'IS_AUTHENTICATED_FULLY'],
+//	'/**':               ['IS_AUTHENTICATED_ANONYMOUSLY']
+//]
+

@@ -1,13 +1,13 @@
-package aulas_express
+package org.example
 
 
 
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(DisciplinaController)
-@Mock(Disciplina)
-class DisciplinaControllerSpec extends Specification {
+@TestFor(PerfilController)
+@Mock(Perfil)
+class PerfilControllerSpec extends Specification {
 
     def populateValidParams(params) {
         assert params != null
@@ -21,8 +21,8 @@ class DisciplinaControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.disciplinaInstanceList
-            model.disciplinaInstanceCount == 0
+            !model.perfilInstanceList
+            model.perfilInstanceCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -30,7 +30,7 @@ class DisciplinaControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.disciplinaInstance!= null
+            model.perfilInstance!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -38,25 +38,25 @@ class DisciplinaControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def disciplina = new Disciplina()
-            disciplina.validate()
-            controller.save(disciplina)
+            def perfil = new Perfil()
+            perfil.validate()
+            controller.save(perfil)
 
         then:"The create view is rendered again with the correct model"
-            model.disciplinaInstance!= null
+            model.perfilInstance!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            disciplina = new Disciplina(params)
+            perfil = new Perfil(params)
 
-            controller.save(disciplina)
+            controller.save(perfil)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/disciplina/show/1'
+            response.redirectedUrl == '/perfil/show/1'
             controller.flash.message != null
-            Disciplina.count() == 1
+            Perfil.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -68,11 +68,11 @@ class DisciplinaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def disciplina = new Disciplina(params)
-            controller.show(disciplina)
+            def perfil = new Perfil(params)
+            controller.show(perfil)
 
         then:"A model is populated containing the domain instance"
-            model.disciplinaInstance == disciplina
+            model.perfilInstance == perfil
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -84,11 +84,11 @@ class DisciplinaControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def disciplina = new Disciplina(params)
-            controller.edit(disciplina)
+            def perfil = new Perfil(params)
+            controller.edit(perfil)
 
         then:"A model is populated containing the domain instance"
-            model.disciplinaInstance == disciplina
+            model.perfilInstance == perfil
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -98,28 +98,28 @@ class DisciplinaControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/disciplina/index'
+            response.redirectedUrl == '/perfil/index'
             flash.message != null
 
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def disciplina = new Disciplina()
-            disciplina.validate()
-            controller.update(disciplina)
+            def perfil = new Perfil()
+            perfil.validate()
+            controller.update(perfil)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.disciplinaInstance == disciplina
+            model.perfilInstance == perfil
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            disciplina = new Disciplina(params).save(flush: true)
-            controller.update(disciplina)
+            perfil = new Perfil(params).save(flush: true)
+            controller.update(perfil)
 
         then:"A redirect is issues to the show action"
-            response.redirectedUrl == "/disciplina/show/$disciplina.id"
+            response.redirectedUrl == "/perfil/show/$perfil.id"
             flash.message != null
     }
 
@@ -130,23 +130,23 @@ class DisciplinaControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/disciplina/index'
+            response.redirectedUrl == '/perfil/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def disciplina = new Disciplina(params).save(flush: true)
+            def perfil = new Perfil(params).save(flush: true)
 
         then:"It exists"
-            Disciplina.count() == 1
+            Perfil.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(disciplina)
+            controller.delete(perfil)
 
         then:"The instance is deleted"
-            Disciplina.count() == 0
-            response.redirectedUrl == '/disciplina/index'
+            Perfil.count() == 0
+            response.redirectedUrl == '/perfil/index'
             flash.message != null
     }
 }
