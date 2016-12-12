@@ -47,7 +47,14 @@ class BootStrap {
 	}
 	
 	private void carregaDadosDeProducao(){
+		criarUsuarios();
+		carregaAdministracao();
+		carregaAulas();
+		carregaAvaliacao();
 		carregaDisciplinas();
+		carregaDisponibilidade();
+		carregaExperiencia();
+		carregaHistorico();
 	}
 	
 	private void criarUsuarios()
