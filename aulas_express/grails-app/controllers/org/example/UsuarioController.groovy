@@ -10,18 +10,16 @@ import grails.transaction.Transactional
 class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
+
 	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
     }
-
 	@Secured(['ROLE_USER'])
     def show(Usuario usuarioInstance) {
         respond usuarioInstance
     }
-
 	@Secured(['ROLE_USER'])
     def create() {
         respond new Usuario(params)
@@ -50,12 +48,13 @@ class UsuarioController {
             '*' { respond usuarioInstance, [status: CREATED] }
         }
     }
-
+	@Secured(['ROLE_USER'])
     def edit(Usuario usuarioInstance) {
         respond usuarioInstance
     }
 
     @Transactional
+	@Secured(['ROLE_USER'])
     def update(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -79,6 +78,7 @@ class UsuarioController {
     }
 
     @Transactional
+	@Secured(['ROLE_USER'])
     def delete(Usuario usuarioInstance) {
 
         if (usuarioInstance == null) {
@@ -97,6 +97,7 @@ class UsuarioController {
         }
     }
 
+	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

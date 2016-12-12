@@ -41,6 +41,123 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${usuarioInstance?.email}">
+				<li class="fieldcontain">
+					<span id="email-label" class="property-label"><g:message code="usuario.email.label" default="Email" /></span>
+					
+						<span class="property-value" aria-labelledby="email-label"><g:fieldValue bean="${usuarioInstance}" field="email"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.first_name}">
+				<li class="fieldcontain">
+					<span id="first_name-label" class="property-label"><g:message code="usuario.first_name.label" default="Firstname" /></span>
+					
+						<span class="property-value" aria-labelledby="first_name-label"><g:fieldValue bean="${usuarioInstance}" field="first_name"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.last_name}">
+				<li class="fieldcontain">
+					<span id="last_name-label" class="property-label"><g:message code="usuario.last_name.label" default="Lastname" /></span>
+					
+						<span class="property-value" aria-labelledby="last_name-label"><g:fieldValue bean="${usuarioInstance}" field="last_name"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.telefone_celular}">
+				<li class="fieldcontain">
+					<span id="telefone_celular-label" class="property-label"><g:message code="usuario.telefone_celular.label" default="Telefonecelular" /></span>
+					
+						<span class="property-value" aria-labelledby="telefone_celular-label"><g:fieldValue bean="${usuarioInstance}" field="telefone_celular"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.telefone_fixo}">
+				<li class="fieldcontain">
+					<span id="telefone_fixo-label" class="property-label"><g:message code="usuario.telefone_fixo.label" default="Telefonefixo" /></span>
+					
+						<span class="property-value" aria-labelledby="telefone_fixo-label"><g:fieldValue bean="${usuarioInstance}" field="telefone_fixo"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.escola_onde_estuda}">
+				<li class="fieldcontain">
+					<span id="escola_onde_estuda-label" class="property-label"><g:message code="usuario.escola_onde_estuda.label" default="Escolaondeestuda" /></span>
+					
+						<span class="property-value" aria-labelledby="escola_onde_estuda-label"><g:fieldValue bean="${usuarioInstance}" field="escola_onde_estuda"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.serie_cursando}">
+				<li class="fieldcontain">
+					<span id="serie_cursando-label" class="property-label"><g:message code="usuario.serie_cursando.label" default="Seriecursando" /></span>
+					
+						<span class="property-value" aria-labelledby="serie_cursando-label"><g:fieldValue bean="${usuarioInstance}" field="serie_cursando"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.rg_numero}">
+				<li class="fieldcontain">
+					<span id="rg_numero-label" class="property-label"><g:message code="usuario.rg_numero.label" default="Rgnumero" /></span>
+					
+						<span class="property-value" aria-labelledby="rg_numero-label"><g:fieldValue bean="${usuarioInstance}" field="rg_numero"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.cpf}">
+				<li class="fieldcontain">
+					<span id="cpf-label" class="property-label"><g:message code="usuario.cpf.label" default="Cpf" /></span>
+					
+						<span class="property-value" aria-labelledby="cpf-label"><g:fieldValue bean="${usuarioInstance}" field="cpf"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.data_nascimento}">
+				<li class="fieldcontain">
+					<span id="data_nascimento-label" class="property-label"><g:message code="usuario.data_nascimento.label" default="Datanascimento" /></span>
+					
+						<span class="property-value" aria-labelledby="data_nascimento-label"><g:formatDate date="${usuarioInstance?.data_nascimento}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.rg_data_expedicao}">
+				<li class="fieldcontain">
+					<span id="rg_data_expedicao-label" class="property-label"><g:message code="usuario.rg_data_expedicao.label" default="Rgdataexpedicao" /></span>
+					
+						<span class="property-value" aria-labelledby="rg_data_expedicao-label"><g:formatDate date="${usuarioInstance?.rg_data_expedicao}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.graduado}">
+				<li class="fieldcontain">
+					<span id="graduado-label" class="property-label"><g:message code="usuario.graduado.label" default="Graduado" /></span>
+					
+						<span class="property-value" aria-labelledby="graduado-label"><g:fieldValue bean="${usuarioInstance}" field="graduado"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.sexo}">
+				<li class="fieldcontain">
+					<span id="sexo-label" class="property-label"><g:message code="usuario.sexo.label" default="Sexo" /></span>
+					
+						<span class="property-value" aria-labelledby="sexo-label"><g:fieldValue bean="${usuarioInstance}" field="sexo"/></span>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${usuarioInstance?.accountExpired}">
 				<li class="fieldcontain">
 					<span id="accountExpired-label" class="property-label"><g:message code="usuario.accountExpired.label" default="Account Expired" /></span>
@@ -59,6 +176,28 @@
 				</li>
 				</g:if>
 			
+				<g:if test="${usuarioInstance?.clienteAulas}">
+				<li class="fieldcontain">
+					<span id="clienteAulas-label" class="property-label"><g:message code="usuario.clienteAulas.label" default="Cliente Aulas" /></span>
+					
+						<g:each in="${usuarioInstance.clienteAulas}" var="c">
+						<span class="property-value" aria-labelledby="clienteAulas-label"><g:link controller="aula" action="show" id="${c.id}">${c?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.disciplinas}">
+				<li class="fieldcontain">
+					<span id="disciplinas-label" class="property-label"><g:message code="usuario.disciplinas.label" default="Disciplinas" /></span>
+					
+						<g:each in="${usuarioInstance.disciplinas}" var="d">
+						<span class="property-value" aria-labelledby="disciplinas-label"><g:link controller="disciplina" action="show" id="${d.id}">${d?.encodeAsHTML()}</g:link></span>
+						</g:each>
+					
+				</li>
+				</g:if>
+			
 				<g:if test="${usuarioInstance?.enabled}">
 				<li class="fieldcontain">
 					<span id="enabled-label" class="property-label"><g:message code="usuario.enabled.label" default="Enabled" /></span>
@@ -73,6 +212,17 @@
 					<span id="passwordExpired-label" class="property-label"><g:message code="usuario.passwordExpired.label" default="Password Expired" /></span>
 					
 						<span class="property-value" aria-labelledby="passwordExpired-label"><g:formatBoolean boolean="${usuarioInstance?.passwordExpired}" /></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${usuarioInstance?.professorAulas}">
+				<li class="fieldcontain">
+					<span id="professorAulas-label" class="property-label"><g:message code="usuario.professorAulas.label" default="Professor Aulas" /></span>
+					
+						<g:each in="${usuarioInstance.professorAulas}" var="p">
+						<span class="property-value" aria-labelledby="professorAulas-label"><g:link controller="aula" action="show" id="${p.id}">${p?.encodeAsHTML()}</g:link></span>
+						</g:each>
 					
 				</li>
 				</g:if>

@@ -28,6 +28,7 @@ class DisciplinaController {
     }
 
     @Transactional
+	@Secured(['ROLE_USER'])
     def save(Disciplina disciplinaInstance) {
         if (disciplinaInstance == null) {
             notFound()
@@ -50,11 +51,13 @@ class DisciplinaController {
         }
     }
 
+	@Secured(['ROLE_USER'])
     def edit(Disciplina disciplinaInstance) {
         respond disciplinaInstance
     }
 
     @Transactional
+	@Secured(['ROLE_USER'])
     def update(Disciplina disciplinaInstance) {
         if (disciplinaInstance == null) {
             notFound()
@@ -78,6 +81,7 @@ class DisciplinaController {
     }
 
     @Transactional
+	@Secured(['ROLE_USER'])
     def delete(Disciplina disciplinaInstance) {
 
         if (disciplinaInstance == null) {
@@ -95,7 +99,7 @@ class DisciplinaController {
             '*'{ render status: NO_CONTENT }
         }
     }
-
+	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

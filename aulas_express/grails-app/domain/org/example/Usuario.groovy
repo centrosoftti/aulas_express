@@ -1,7 +1,8 @@
 package org.example
 
 import java.util.Date
-
+import aulas_express.Aula
+import aulas_express.Disciplina
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -23,6 +24,10 @@ class Usuario implements Serializable {
 	String email
 	String first_name
 	String last_name
+	
+	static hasMany = [clienteAulas: Aula, professorAulas: Aula, disciplinas:Disciplina]
+	static mappedBy = [clienteAulas: "cliente",
+					   professorAulas: "professor"]
 	
 	String telefone_celular
 	String telefone_fixo
