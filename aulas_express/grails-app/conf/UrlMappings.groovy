@@ -9,6 +9,14 @@ class UrlMappings {
 				// apply constraints here
 			}
 		}
+		"/administracoes"(resources:'administracao')
+		"/aulas"(resources:'aula')
+		"/avaliacoes"(resources:'avaliacao')
+		"/disciplinas"(resources:'disciplina')
+		"/disponibilidades"(resources:'disponibilidade')
+		"/experiencias"(resources:'experiencia')
+		"/historicos"(resources:'historico')
+		
 		"/"(view:"/index")
 		"500"(view:'/error')
 		
