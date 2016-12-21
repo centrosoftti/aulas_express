@@ -14,8 +14,16 @@ class BootStrap {
 
 	def springSecurityService
 	def adminUser
+	
 	def professorUser
+	def professorUser2
+	
 	def usuarioUser
+	def usuarioUser2
+	
+	def disciplina1
+	def disciplina2
+	def disciplina3
 	
     def init = { servletContext ->
 		
@@ -47,11 +55,11 @@ class BootStrap {
 	}
 	
 	private void carregaDadosDeProducao(){
+		carregaDisciplinas();
 		criarUsuarios();
 		carregaAdministracao();
 		carregaAulas();
 		carregaAvaliacao();
-		carregaDisciplinas();
 		carregaDisponibilidade();
 		carregaExperiencia();
 		carregaHistorico();
@@ -73,10 +81,38 @@ class BootStrap {
 		
 		UsuarioPerfil.create(adminUser, adminPerfil, true)
 		
-		professorUser = new Usuario(username: 'professor', enabled: true, email: 'professor@test.com', first_name: 'Jean', last_name: 'Travassos', password: '1234')
-		professorUser.save(flush: true)
+		disciplina1 = new Disciplina(
+			nome:"Matemática").save();
+		
+		disciplina2 = new Disciplina(
+			nome:"Português").save();
+		
+		disciplina3 = new Disciplina(
+			nome:"Geografia").save();
+		
+		professorUser = new Usuario(username: 'professor', 
+			enabled: true, 
+			email: 'professor@test.com', 
+			first_name: 'Jean', 
+			last_name: 'Travassos', 
+			password: '1234')
+		.addToDisciplinas(disciplina1)
+        .addToDisciplinas(disciplina2)
+        .save(flush: true)
+//		professorUser.save(flush: true)
+		
+		professorUser2 = new Usuario(username: 'professor2',
+			enabled: true,
+			email: 'professor2@test.com',
+			first_name: 'Tia Leo',
+			last_name: 'Travassos',
+			password: '1234')
+		.addToDisciplinas(disciplina3)
+		.save(flush: true)
+//		professorUser.save(flush: true)
 		
 		UsuarioPerfil.create(professorUser, professorPerfil, true)
+		UsuarioPerfil.create(professorUser2, professorPerfil, true)
 		
 
 		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
@@ -84,9 +120,14 @@ class BootStrap {
 		
 		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
 		
-		assert Usuario.count() == 3
+		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'thiago@test.com', first_name: 'Leandro', last_name: 'Coutinho', password: '1234')
+		usuarioUser2.save(flush: true)
+		
+		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true)
+		
+		assert Usuario.count() == 5
 		assert Perfil.count() == 3
-		assert UsuarioPerfil.count() == 3
+		assert UsuarioPerfil.count() == 5
 
 	}
 	
@@ -129,7 +170,17 @@ class BootStrap {
 			valorAula:50.00,
 			observacao:"").save();
 		
-		assert Aula.count() == 2
+		def aula3 = new Aula(
+			cliente:usuarioUser2,
+			professor:professorUser,
+			data_hora:new Timestamp((new Date()).getTime()),
+			status:1,
+			quantidade_alunos:1,
+			quantidade_horas:2,
+			valorAula:50.00,
+			observacao:"").save();
+		
+		assert Aula.count() == 3
 	}
 	
 	private void carregaAvaliacao(){
@@ -154,14 +205,7 @@ class BootStrap {
 		//Se for necessario dados especificos para producao, carregar aqui.
 		println "Carregando Disciplinas..."
 		
-		def disciplina1 = new Disciplina(
-			nome:"Matemática").save();
 		
-		def disciplina2 = new Disciplina(
-			nome:"Português").save();
-		
-		def disciplina3 = new Disciplina(
-			nome:"Geografia").save();
 		
 		def disciplina4 = new Disciplina(
 			nome:"História").save();

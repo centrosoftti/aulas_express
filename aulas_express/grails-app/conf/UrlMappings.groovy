@@ -10,7 +10,20 @@ class UrlMappings {
 			}
 		}
 		"/administracoes"(resources:'administracao')
-		"/aulas"(resources:'aula')
+		"/usuarios"(resources:'cliente') {
+			"/aulas"(resources:"aula")
+		}
+		
+		"/aulas"(controller:"aula", action:"aulasporcliente")
+		"/aulas"(controller:"aula", action:"aulasporprofessor")
+		
+		"/usuarios"(controller:"usuario", action:"professorpordisciplina")
+		
+		"/usuarios"(resources:'usuario') {
+			"/disciplinas"(resources:"disciplina")
+		  }
+		
+		"/usuarios"(resources:"usuario")
 		"/avaliacoes"(resources:'avaliacao')
 		"/disciplinas"(resources:'disciplina')
 		"/disponibilidades"(resources:'disponibilidade')

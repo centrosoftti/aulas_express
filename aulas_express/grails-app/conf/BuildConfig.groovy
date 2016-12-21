@@ -62,6 +62,7 @@ grails.project.dependency.resolution = {
         compile ':cache:1.1.8'
         compile ":asset-pipeline:1.9.9"
 		compile 'org.grails.plugins:spring-security-core:2.0.0'
+		compile "org.grails.plugins:spring-security-rest:1.5.4"
 		compile ':heroku:1.0.1'
 		compile ':cloud-support:1.0.11'
 

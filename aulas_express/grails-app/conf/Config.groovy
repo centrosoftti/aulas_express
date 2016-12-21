@@ -121,6 +121,32 @@ log4j.main = {
 
 
 // Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.filterChain.chainMap = [
+	'/api/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
+	'/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
+]
+
+grails.plugin.springsecurity.rest.login.active = true
+grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login'
+grails.plugin.springsecurity.rest.login.failureStatusCode = 401
+
+grails.plugin.springsecurity.rest.login.useJsonCredentials = true
+grails.plugin.springsecurity.rest.login.usernamePropertyName = 'usarname'
+grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'
+
+grails.plugin.springsecurity.rest.login.useRequestParamsCredentials = false
+grails.plugin.springsecurity.rest.login.usernamePropertyName = 'username'
+grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'
+
+grails.plugin.springsecurity.rest.token.rendering.usernamePropertyName = 'username'
+grails.plugin.springsecurity.rest.token.rendering.authoritiesPropertyName = 'roles'
+
+grails.plugin.springsecurity.rest.logout.endpointUrl = '/api/logout'
+grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
+grails.plugin.springsecurity.rest.token.validation.headerName = 'X-Auth-Token'
+
+
+
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.example.Usuario'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.example.UsuarioPerfil'
 grails.plugin.springsecurity.authority.className = 'org.example.Perfil'
@@ -128,9 +154,9 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	
 	'/':                ['permitAll'],
 	'/index':           ['permitAll'],
-	'/index.gsp':       ['permitAll']
+	'/index.gsp':       ['permitAll'],
 //	'/*': ['ROLE_USER']
-//	'/assets/**':       ['permitAll'],
+	'/assets/**':       ['permitAll'],
 //	'/**/js/**':        ['permitAll'],
 //	'/**/css/**':       ['permitAll'],
 //	'/**/images/**':    ['permitAll'],

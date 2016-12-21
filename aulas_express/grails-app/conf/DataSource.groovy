@@ -54,16 +54,27 @@ environments {
 //            }
 //        }
 		
+//		dataSource {
+////			pooled = true
+////			dbCreate = "none" - create/create-drop/update
+//			dbCreate = "update"
+//			url = "jdbc:mysql://mysql.ctsoft.com.br/ctsoft02"
+//			driverClassName = "com.mysql.jdbc.Driver"
+//			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+//			username = "ctsoft02"
+//			password = "soft2011"
+//		}
+		
 		dataSource {
-//			pooled = true
-//			dbCreate = "none" - create/create-drop/update
-			dbCreate = "create-drop"
-			url = "jdbc:mysql://mysql.ctsoft.com.br/ctsoft02"
-			driverClassName = "com.mysql.jdbc.Driver"
-			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-			username = "ctsoft02"
-			password = "soft2011"
-		}
+			//			pooled = true
+			//			dbCreate = "none" - create/create-drop/update
+						dbCreate = "create-drop"
+						url = "jdbc:mysql://localhost:/aexpressdb"
+						driverClassName = "com.mysql.jdbc.Driver"
+						dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
+						username = "ctsoft"
+						password = "@Soft15"
+					}
 		
     }
 }

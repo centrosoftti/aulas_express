@@ -25,6 +25,12 @@ class UsuarioController {
         respond new Usuario(params)
     }
 
+	@Secured(['ROLE_USER'])
+	def professorespordisciplina() {
+		println "Entrei nos professores por disciplina..."
+		
+	}
+	
     @Transactional
 	@Secured(['ROLE_USER'])
     def save(Usuario usuarioInstance) {
