@@ -3,6 +3,7 @@ package aulas_express
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
@@ -14,22 +15,29 @@ class DisciplinaController {
 	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Disciplina.list(params), model:[disciplinaInstanceCount: Disciplina.count()]
+        
+		def jsonResponse = ['response':['status':0,'data':Disciplina.list(params), model:[disciplinaInstanceCount: Disciplina.count()]]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 
 	@Secured(['ROLE_USER'])
     def show(Disciplina disciplinaInstance) {
-        respond disciplinaInstance
+		def jsonResponse = ['response':['status':0,'data':disciplinaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
+//        respond disciplinaInstance
     }
 
 	@Secured(['ROLE_USER'])
     def create() {
-        respond new Disciplina(params)
+        respond save(new Disciplina(params))
     }
 
     @Transactional
 	@Secured(['ROLE_USER'])
     def save(Disciplina disciplinaInstance) {
+		println "Entrei no save disciplina..."
         if (disciplinaInstance == null) {
             notFound()
             return
@@ -49,6 +57,10 @@ class DisciplinaController {
             }
             '*' { respond disciplinaInstance, [status: CREATED] }
         }
+		
+		def jsonResponse = ['response':['status':0,'data':disciplinaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 
 	@Secured(['ROLE_USER'])

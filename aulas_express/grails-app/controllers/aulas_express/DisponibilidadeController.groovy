@@ -3,8 +3,10 @@ package aulas_express
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import org.example.Usuario
 
 @Transactional(readOnly = true)
 class DisponibilidadeController {
@@ -21,7 +23,13 @@ class DisponibilidadeController {
     }
 	@Secured(['ROLE_USER'])
     def create() {
-        respond new Disponibilidade(params)
+		def disponibilidade = new Disponibilidade(params)
+		
+		if(params.idProfessor)
+			disponibilidade.professor = Usuario.get(params.idProfessor)
+			
+		respond save(disponibilidade)
+//        respond new Disponibilidade(params)
     }
 
     @Transactional
@@ -46,6 +54,10 @@ class DisponibilidadeController {
             }
             '*' { respond disponibilidadeInstance, [status: CREATED] }
         }
+		
+		def jsonResponse = ['response':['status':0,'data':disponibilidadeInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 	@Secured(['ROLE_USER'])
     def edit(Disponibilidade disponibilidadeInstance) {
@@ -74,6 +86,10 @@ class DisponibilidadeController {
             }
             '*'{ respond disponibilidadeInstance, [status: OK] }
         }
+		
+		def jsonResponse = ['response':['status':0,'data':disponibilidadeInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 
     @Transactional

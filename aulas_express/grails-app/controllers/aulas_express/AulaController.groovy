@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
+import java.sql.Timestamp
+import org.example.Usuario
 
 @Transactional(readOnly = true)
 
@@ -15,20 +17,37 @@ class AulaController {
 	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Aula.list(params), model:[aulaInstanceCount: Aula.count()]
+        
+		def jsonResponse = ['response':['status':0,'data':Aula.list(params), model:[aulaInstanceCount: Aula.count()]]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 	@Secured(['ROLE_USER'])
     def show(Aula aulaInstance) {
-        respond aulaInstance
+		def jsonResponse = ['response':['status':0,'data':aulaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
+//        respond aulaInstance
     }
 	@Secured(['ROLE_USER'])
     def create() {
+//		respond new Aula(params)
+	
 		def aula = new Aula(params)
 		
 		if(params.idCliente)
 			aula.cliente = Usuario.get(params.idCliente)
+		if(params.idProfessor)
+			aula.professor = Usuario.get(params.idProfessor)
+			
+		aula.data_hora = new Timestamp((new Date()).getTime())
+//		aula.status = params.status
+//		aula.quantidade_alunos = params.quantidade_alunos
+//		aula.quantidade_horas = params.quantidade_horas
+//		aula.valorAula = params.valorAula
+//		aula.observacao = params.observacao
 		
-        respond aula
+        respond save(aula)
     }
 	@Secured(['ROLE_USER'])
 	def aulasporcliente() {
@@ -114,7 +133,9 @@ class AulaController {
     @Transactional
 	@Secured(['ROLE_USER'])
     def save(Aula aulaInstance) {
-        if (aulaInstance == null) {
+		println "Entrei no save aula..."
+        
+		if (aulaInstance == null) {
             notFound()
             return
         }
@@ -133,6 +154,10 @@ class AulaController {
             }
             '*' { respond aulaInstance, [status: CREATED] }
         }
+		
+		def jsonResponse = ['response':['status':0,'data':aulaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 	@Secured(['ROLE_USER'])
     def edit(Aula aulaInstance) {
@@ -161,6 +186,10 @@ class AulaController {
             }
             '*'{ respond aulaInstance, [status: OK] }
         }
+		
+		def jsonResponse = ['response':['status':0,'data':aulaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
 
     @Transactional
