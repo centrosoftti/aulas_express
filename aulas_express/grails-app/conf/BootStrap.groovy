@@ -65,19 +65,85 @@ class BootStrap {
 		carregaHistorico();
 	}
 	
+//	private void criarUsuarios()
+//	{
+//		println "Carregando usuarios..."
+//				
+//		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save(flush: true)
+//		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save(flush: true)
+//		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save(flush: true)
+//		
+//		
+//		String password = springSecurityService.encodePassword('1234')
+//			
+//		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', last_name: 'Passos', password: '1234')
+//		adminUser.save(flush: true)
+//		
+//		UsuarioPerfil.create(adminUser, adminPerfil, true)
+//		
+//		disciplina1 = new Disciplina(
+//			nome:"Matemática").save();
+//		
+//		disciplina2 = new Disciplina(
+//			nome:"Português").save();
+//		
+//		disciplina3 = new Disciplina(
+//			nome:"Geografia").save();
+//		
+//		professorUser = new Usuario(username: 'professor', 
+//			enabled: true, 
+//			email: 'professor@test.com', 
+//			first_name: 'Jean', 
+//			last_name: 'Travassos', 
+//			password: '1234')
+//		.addToDisciplinas(disciplina1)
+//        .addToDisciplinas(disciplina2)
+//        .save(flush: true)
+////		professorUser.save(flush: true)
+//		
+//		professorUser2 = new Usuario(username: 'professor2',
+//			enabled: true,
+//			email: 'professor2@test.com',
+//			first_name: 'Tia Leo',
+//			last_name: 'Travassos',
+//			password: '1234')
+//		.addToDisciplinas(disciplina3)
+//		.save(flush: true)
+////		professorUser.save(flush: true)
+//		
+//		UsuarioPerfil.create(professorUser, professorPerfil, true)
+//		UsuarioPerfil.create(professorUser2, professorPerfil, true)
+//		
+//
+//		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
+//		usuarioUser.save(flush: true)
+//		
+//		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
+//		
+//		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'thiago@test.com', first_name: 'Leandro', last_name: 'Coutinho', password: '1234')
+//		usuarioUser2.save(flush: true)
+//		
+//		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true)
+//		
+//		assert Usuario.count() == 5
+//		assert Perfil.count() == 3
+//		assert UsuarioPerfil.count() == 5
+//
+//	}
+	
 	private void criarUsuarios()
 	{
 		println "Carregando usuarios..."
 				
-		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save(flush: true)
-		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save(flush: true)
-		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save(flush: true)
+		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save()
+		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save()
+		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save()
 		
 		
 		String password = springSecurityService.encodePassword('1234')
 			
 		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', last_name: 'Passos', password: '1234')
-		adminUser.save(flush: true)
+		adminUser.save()
 		
 		UsuarioPerfil.create(adminUser, adminPerfil, true)
 		
@@ -90,15 +156,15 @@ class BootStrap {
 		disciplina3 = new Disciplina(
 			nome:"Geografia").save();
 		
-		professorUser = new Usuario(username: 'professor', 
-			enabled: true, 
-			email: 'professor@test.com', 
-			first_name: 'Jean', 
-			last_name: 'Travassos', 
+		professorUser = new Usuario(username: 'professor',
+			enabled: true,
+			email: 'professor@test.com',
+			first_name: 'Jean',
+			last_name: 'Travassos',
 			password: '1234')
 		.addToDisciplinas(disciplina1)
-        .addToDisciplinas(disciplina2)
-        .save(flush: true)
+		.addToDisciplinas(disciplina2)
+		.save(flush: true)
 //		professorUser.save(flush: true)
 		
 		professorUser2 = new Usuario(username: 'professor2',
@@ -108,7 +174,7 @@ class BootStrap {
 			last_name: 'Travassos',
 			password: '1234')
 		.addToDisciplinas(disciplina3)
-		.save(flush: true)
+		.save()
 //		professorUser.save(flush: true)
 		
 		UsuarioPerfil.create(professorUser, professorPerfil, true)
@@ -116,12 +182,12 @@ class BootStrap {
 		
 
 		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
-		usuarioUser.save(flush: true)
+		usuarioUser.save()
 		
 		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
 		
 		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'thiago@test.com', first_name: 'Leandro', last_name: 'Coutinho', password: '1234')
-		usuarioUser2.save(flush: true)
+		usuarioUser2.save()
 		
 		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true)
 		

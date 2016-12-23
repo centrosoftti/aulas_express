@@ -16,7 +16,7 @@ grails.project.fork = [
     // configure settings for the run-app JVM
     run: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
     // configure settings for the run-war JVM
-    war: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
+    war: [maxMemory: 512, minMemory: 64, debug: false, maxPerm: 256, forkReserve:false],
     // configure settings for the Console UI JVM
     console: [maxMemory: 768, minMemory: 64, debug: false, maxPerm: 256]
 ]
@@ -55,15 +55,16 @@ grails.project.dependency.resolution = {
 
     plugins {
         // plugins for the build system only
-        build ":tomcat:7.0.55"
-
+//        build ":tomcat:7.0.70"
+		build ':tomcat:8.0.33'
+		
         // plugins for the compile step
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.8'
         compile ":asset-pipeline:1.9.9"
 		compile 'org.grails.plugins:spring-security-core:2.0.0'
 		compile "org.grails.plugins:spring-security-rest:1.5.4"
-		compile ':heroku:1.0.1'
+//		compile ':heroku:1.0.1'
 		compile ':cloud-support:1.0.11'
 
         // plugins needed at runtime but not for compilation

@@ -92,7 +92,8 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-		grails.serverURL = "http://www.ctsoft.com.br/aulasexpress"
+		grails.serverURL = "http://aulasexpress.centrosoftti.com.br:8080/aulasexpress"
+//		grails.serverURL = "http://localhost:8080/aulasexpress"
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
