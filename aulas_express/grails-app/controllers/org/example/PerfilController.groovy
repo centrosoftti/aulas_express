@@ -3,7 +3,6 @@ package org.example
 
 
 import static org.springframework.http.HttpStatus.*
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -11,24 +10,20 @@ class PerfilController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Perfil.list(params), model:[perfilInstanceCount: Perfil.count()]
     }
 
-	@Secured(['ROLE_USER'])
     def show(Perfil perfilInstance) {
         respond perfilInstance
     }
 
-	@Secured(['ROLE_USER'])
     def create() {
         respond new Perfil(params)
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Perfil perfilInstance) {
         if (perfilInstance == null) {
             notFound()

@@ -4,7 +4,6 @@ package org.example
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import aulas_express.Disciplina
 
@@ -13,26 +12,22 @@ class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def jsonResponse = ['response':['status':0,'data':Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]]]
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def show(Usuario usuarioInstance) {
 //        respond usuarioInstance
 		def jsonResponse = ['response':['status':0,'data':usuarioInstance]]
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def create() {
         respond new Usuario(params)
     }
 
-	@Secured(['ROLE_USER'])
 	def professorespordisciplina() {
 		println "Entrei nos professores por disciplina..."
 		println "Params: ${params}"
@@ -64,7 +59,6 @@ class UsuarioController {
 	}
 	
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -90,7 +84,6 @@ class UsuarioController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def edit(Usuario usuarioInstance) {
 		println "Entrei editar professor com disciplina..."
 		println "Params: ${params}"
@@ -114,7 +107,6 @@ class UsuarioController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -142,7 +134,6 @@ class UsuarioController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Usuario usuarioInstance) {
 
         if (usuarioInstance == null) {
@@ -161,7 +152,6 @@ class UsuarioController {
         }
     }
 
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {
@@ -171,4 +161,39 @@ class UsuarioController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def mylogin(){
+		println "Entrei no login usuario na mao..."
+		println "Params: ${params}"
+		
+		def usuarios = null
+		if(params.username && params.password)
+		{
+			println "Entrei nas params usuarios..."
+			def u = Usuario.createCriteria()
+			usuarios = u{
+				println "Entrei nas criterias usuarios..."
+				if (params.username)
+					eq("username", params.username)
+				if (params.password)
+					eq("password", params.password)
+			}
+		}
+		println "Usuarios: ${usuarios}"
+		
+		def retorno = []
+		usuarios.each {use ->
+			retorno.add(
+				[
+					"id":use.id,
+					"username":use.username,
+					"nome_usuario":use.first_name + ' ' + use.last_name,
+				]
+			)
+		}
+		println "Retorno: ${retorno}"
+		def jsonResponse = ['response':['status':0,'data':retorno]]
+		render jsonResponse as JSON
+		respond jsonResponse
+	}
 }
