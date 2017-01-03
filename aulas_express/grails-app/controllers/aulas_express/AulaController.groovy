@@ -4,7 +4,6 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import java.sql.Timestamp
 import org.example.Usuario
@@ -14,7 +13,6 @@ import org.example.Usuario
 class AulaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         
@@ -22,14 +20,12 @@ class AulaController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def show(Aula aulaInstance) {
 		def jsonResponse = ['response':['status':0,'data':aulaInstance]]
 		render jsonResponse as JSON
 		respond jsonResponse
 //        respond aulaInstance
     }
-	@Secured(['ROLE_USER'])
     def create() {
 //		respond new Aula(params)
 	
@@ -49,7 +45,6 @@ class AulaController {
 		
         respond save(aula)
     }
-	@Secured(['ROLE_USER'])
 	def aulasporcliente() {
 		println "Entrei nas aulas por cliente..."
 		println request.method
@@ -90,7 +85,6 @@ class AulaController {
 		respond jsonResponse
 	}
 	
-	@Secured(['ROLE_USER'])
 	def aulasporprofessor() {
 		println "Entrei nas aulas..."
 		println request.method
@@ -131,7 +125,6 @@ class AulaController {
 	}
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Aula aulaInstance) {
 		println "Entrei no save aula..."
         
@@ -159,13 +152,11 @@ class AulaController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def edit(Aula aulaInstance) {
         respond aulaInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Aula aulaInstance) {
         if (aulaInstance == null) {
             notFound()
@@ -193,7 +184,6 @@ class AulaController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Aula aulaInstance) {
 
         if (aulaInstance == null) {
@@ -211,7 +201,6 @@ class AulaController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

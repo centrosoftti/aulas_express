@@ -4,7 +4,6 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -12,7 +11,6 @@ class DisciplinaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         
@@ -21,7 +19,6 @@ class DisciplinaController {
 		respond jsonResponse
     }
 
-	@Secured(['ROLE_USER'])
     def show(Disciplina disciplinaInstance) {
 		def jsonResponse = ['response':['status':0,'data':disciplinaInstance]]
 		render jsonResponse as JSON
@@ -29,13 +26,11 @@ class DisciplinaController {
 //        respond disciplinaInstance
     }
 
-	@Secured(['ROLE_USER'])
     def create() {
         respond save(new Disciplina(params))
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Disciplina disciplinaInstance) {
 		println "Entrei no save disciplina..."
         if (disciplinaInstance == null) {
@@ -63,13 +58,11 @@ class DisciplinaController {
 		respond jsonResponse
     }
 
-	@Secured(['ROLE_USER'])
     def edit(Disciplina disciplinaInstance) {
         respond disciplinaInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Disciplina disciplinaInstance) {
         if (disciplinaInstance == null) {
             notFound()
@@ -93,7 +86,6 @@ class DisciplinaController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Disciplina disciplinaInstance) {
 
         if (disciplinaInstance == null) {
@@ -111,7 +103,6 @@ class DisciplinaController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

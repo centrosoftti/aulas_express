@@ -4,7 +4,6 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import org.example.Usuario
 
@@ -12,16 +11,13 @@ import org.example.Usuario
 class DisponibilidadeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Disponibilidade.list(params), model:[disponibilidadeInstanceCount: Disponibilidade.count()]
     }
-	@Secured(['ROLE_USER'])
     def show(Disponibilidade disponibilidadeInstance) {
         respond disponibilidadeInstance
     }
-	@Secured(['ROLE_USER'])
     def create() {
 		def disponibilidade = new Disponibilidade(params)
 		
@@ -33,7 +29,6 @@ class DisponibilidadeController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Disponibilidade disponibilidadeInstance) {
         if (disponibilidadeInstance == null) {
             notFound()
@@ -59,13 +54,11 @@ class DisponibilidadeController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def edit(Disponibilidade disponibilidadeInstance) {
         respond disponibilidadeInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Disponibilidade disponibilidadeInstance) {
         if (disponibilidadeInstance == null) {
             notFound()
@@ -93,7 +86,6 @@ class DisponibilidadeController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Disponibilidade disponibilidadeInstance) {
 
         if (disponibilidadeInstance == null) {
@@ -111,7 +103,6 @@ class DisponibilidadeController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

@@ -4,7 +4,6 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import org.example.Usuario
 
@@ -13,16 +12,13 @@ class ExperienciaController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Experiencia.list(params), model:[experienciaInstanceCount: Experiencia.count()]
     }
-	@Secured(['ROLE_USER'])
     def show(Experiencia experienciaInstance) {
         respond experienciaInstance
     }
-	@Secured(['ROLE_USER'])
     def create() {
 		
 		def experiencia = new Experiencia(params)
@@ -35,7 +31,6 @@ class ExperienciaController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Experiencia experienciaInstance) {
         if (experienciaInstance == null) {
             notFound()
@@ -61,13 +56,11 @@ class ExperienciaController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
-	@Secured(['ROLE_USER'])
     def edit(Experiencia experienciaInstance) {
         respond experienciaInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Experiencia experienciaInstance) {
         if (experienciaInstance == null) {
             notFound()
@@ -95,7 +88,6 @@ class ExperienciaController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Experiencia experienciaInstance) {
 
         if (experienciaInstance == null) {
@@ -113,7 +105,6 @@ class ExperienciaController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

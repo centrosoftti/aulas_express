@@ -4,29 +4,24 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class AdministracaoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Administracao.list(params), model:[administracaoInstanceCount: Administracao.count()]
     }
-	@Secured(['ROLE_USER'])
     def show(Administracao administracaoInstance) {
         respond administracaoInstance
     }
-	@Secured(['ROLE_USER'])
     def create() {
         respond save(new Administracao(params))
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Administracao administracaoInstance) {
         if (administracaoInstance == null) {
             notFound()
@@ -53,13 +48,11 @@ class AdministracaoController {
 		respond jsonResponse
     }
 
-	@Secured(['ROLE_USER'])
     def edit(Administracao administracaoInstance) {
         respond administracaoInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Administracao administracaoInstance) {
         if (administracaoInstance == null) {
             notFound()
@@ -86,7 +79,6 @@ class AdministracaoController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Administracao administracaoInstance) {
 
         if (administracaoInstance == null) {
@@ -104,7 +96,6 @@ class AdministracaoController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {

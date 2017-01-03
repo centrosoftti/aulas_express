@@ -4,7 +4,6 @@ package aulas_express
 
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
-import grails.plugin.springsecurity.annotation.Secured
 import grails.transaction.Transactional
 import org.example.Usuario
 
@@ -12,16 +11,13 @@ import org.example.Usuario
 class AvaliacaoController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	@Secured(['ROLE_USER'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Avaliacao.list(params), model:[avaliacaoInstanceCount: Avaliacao.count()]
     }
-	@Secured(['ROLE_USER'])
     def show(Avaliacao avaliacaoInstance) {
         respond avaliacaoInstance
     }
-	@Secured(['ROLE_USER'])
     def create() {
 		def avaliacao = new Avaliacao(params)
 		
@@ -32,7 +28,6 @@ class AvaliacaoController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def save(Avaliacao avaliacaoInstance) {
         if (avaliacaoInstance == null) {
             notFound()
@@ -58,13 +53,11 @@ class AvaliacaoController {
 		respond jsonResponse
     }
 
-	@Secured(['ROLE_USER'])
     def edit(Avaliacao avaliacaoInstance) {
         respond avaliacaoInstance
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def update(Avaliacao avaliacaoInstance) {
         if (avaliacaoInstance == null) {
             notFound()
@@ -92,7 +85,6 @@ class AvaliacaoController {
     }
 
     @Transactional
-	@Secured(['ROLE_USER'])
     def delete(Avaliacao avaliacaoInstance) {
 
         if (avaliacaoInstance == null) {
@@ -110,7 +102,6 @@ class AvaliacaoController {
             '*'{ render status: NO_CONTENT }
         }
     }
-	@Secured(['ROLE_USER'])
     protected void notFound() {
         request.withFormat {
             form multipartForm {
