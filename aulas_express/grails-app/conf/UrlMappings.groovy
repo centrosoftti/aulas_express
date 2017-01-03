@@ -17,11 +17,13 @@ class UrlMappings {
 		"/aulas"(controller:"aula", action:"aulasporcliente")
 		"/aulas"(controller:"aula", action:"aulasporprofessor")
 		
-		"/usuarios"(controller:"usuario", action:"professorpordisciplina")
+		"/usuarios"(controller:"usuario", action:"professorespordisciplina")
 		
 		"/usuarios"(resources:'usuario') {
 			"/disciplinas"(resources:"disciplina")
 		  }
+		
+		"/usuarios"(controller:"usuario", action:"mylogin")
 		
 		"/usuarios"(resources:"usuario")
 		"/avaliacoes"(resources:'avaliacao')

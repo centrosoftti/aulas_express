@@ -92,8 +92,10 @@ environments {
     }
     production {
         grails.logging.jul.usebridge = false
-		grails.serverURL = "http://aulasexpress.centrosoftti.com.br:8080/aulasexpress"
-//		grails.serverURL = "http://localhost:8080/aulasexpress"
+//		grails.serverURL = "http://localhost:8080/TDProxyServer-1.2.5"
+		grails.serverURL = "http://www.ctsoft.com.br/aulasexpress"
+//		grails.serverURL = "http://104.236.121.238:8080/aulasexpress"
+//		grails.serverURL = "http://www.centrosoftapps.com/aulasexpress"
         // TODO: grails.serverURL = "http://www.changeme.com"
     }
 }
@@ -104,7 +106,7 @@ log4j.main = {
     //
     appenders {
         console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-		'null' name:'stacktrace'
+//		'null' name:'stacktrace'
     }
 
     error  'org.codehaus.groovy.grails.web.servlet',        // controllers
@@ -120,56 +122,4 @@ log4j.main = {
            'net.sf.ehcache.hibernate'
 }
 
-
-// Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.filterChain.chainMap = [
-	'/api/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-rememberMeAuthenticationFilter',  // Stateless chain
-	'/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                                                          // Traditional chain
-]
-
-grails.plugin.springsecurity.rest.login.active = true
-grails.plugin.springsecurity.rest.login.endpointUrl = '/api/login'
-grails.plugin.springsecurity.rest.login.failureStatusCode = 401
-
-grails.plugin.springsecurity.rest.login.useJsonCredentials = true
-grails.plugin.springsecurity.rest.login.usernamePropertyName = 'usarname'
-grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'
-
-grails.plugin.springsecurity.rest.login.useRequestParamsCredentials = false
-grails.plugin.springsecurity.rest.login.usernamePropertyName = 'username'
-grails.plugin.springsecurity.rest.login.passwordPropertyName = 'password'
-
-grails.plugin.springsecurity.rest.token.rendering.usernamePropertyName = 'username'
-grails.plugin.springsecurity.rest.token.rendering.authoritiesPropertyName = 'roles'
-
-grails.plugin.springsecurity.rest.logout.endpointUrl = '/api/logout'
-grails.plugin.springsecurity.rest.token.validation.useBearerToken = false
-grails.plugin.springsecurity.rest.token.validation.headerName = 'X-Auth-Token'
-
-
-
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.example.Usuario'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.example.UsuarioPerfil'
-grails.plugin.springsecurity.authority.className = 'org.example.Perfil'
-grails.plugin.springsecurity.controllerAnnotations.staticRules = [
-	
-	'/':                ['permitAll'],
-	'/index':           ['permitAll'],
-	'/index.gsp':       ['permitAll'],
-//	'/*': ['ROLE_USER']
-	'/assets/**':       ['permitAll'],
-//	'/**/js/**':        ['permitAll'],
-//	'/**/css/**':       ['permitAll'],
-//	'/**/images/**':    ['permitAll'],
-//	'/**/favicon.ico':  ['permitAll']
-]
-
-//grails.plugins.springsecurity.securityConfigType = SecurityConfigType.InterceptUrlMap
-//grails.plugins.springsecurity.interceptUrlMap = [
-//	'/timeline':         ['ROLE_USER'],
-//	'/person/*':         ['IS_AUTHENTICATED_REMEMBERED'],
-//	'/post/followAjax':  ['ROLE_USER'],
-//	'/post/addPostAjax': ['ROLE_USER', 'IS_AUTHENTICATED_FULLY'],
-//	'/**':               ['IS_AUTHENTICATED_ANONYMOUSLY']
-//]
 

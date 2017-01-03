@@ -12,7 +12,7 @@ import org.example.UsuarioPerfil
 
 class BootStrap {
 
-	def springSecurityService
+//	def springSecurityService
 	def adminUser
 	
 	def professorUser
@@ -20,6 +20,7 @@ class BootStrap {
 	
 	def usuarioUser
 	def usuarioUser2
+	def usuarioAndre
 	
 	def disciplina1
 	def disciplina2
@@ -59,141 +60,140 @@ class BootStrap {
 		criarUsuarios();
 		carregaAdministracao();
 		carregaAulas();
-		carregaAvaliacao();
-		carregaDisponibilidade();
+//		carregaAvaliacao();
+//		carregaDisponibilidade();
 		carregaExperiencia();
 		carregaHistorico();
 	}
 	
-//	private void criarUsuarios()
-//	{
-//		println "Carregando usuarios..."
-//				
-//		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save(flush: true)
-//		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save(flush: true)
-//		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save(flush: true)
-//		
-//		
-//		String password = springSecurityService.encodePassword('1234')
-//			
-//		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', last_name: 'Passos', password: '1234')
-//		adminUser.save(flush: true)
-//		
-//		UsuarioPerfil.create(adminUser, adminPerfil, true)
-//		
-//		disciplina1 = new Disciplina(
-//			nome:"Matemática").save();
-//		
-//		disciplina2 = new Disciplina(
-//			nome:"Português").save();
-//		
-//		disciplina3 = new Disciplina(
-//			nome:"Geografia").save();
-//		
-//		professorUser = new Usuario(username: 'professor', 
-//			enabled: true, 
-//			email: 'professor@test.com', 
-//			first_name: 'Jean', 
-//			last_name: 'Travassos', 
-//			password: '1234')
-//		.addToDisciplinas(disciplina1)
-//        .addToDisciplinas(disciplina2)
-//        .save(flush: true)
-////		professorUser.save(flush: true)
-//		
-//		professorUser2 = new Usuario(username: 'professor2',
-//			enabled: true,
-//			email: 'professor2@test.com',
-//			first_name: 'Tia Leo',
-//			last_name: 'Travassos',
-//			password: '1234')
-//		.addToDisciplinas(disciplina3)
-//		.save(flush: true)
-////		professorUser.save(flush: true)
-//		
-//		UsuarioPerfil.create(professorUser, professorPerfil, true)
-//		UsuarioPerfil.create(professorUser2, professorPerfil, true)
-//		
-//
-//		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
-//		usuarioUser.save(flush: true)
-//		
-//		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
-//		
-//		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'thiago@test.com', first_name: 'Leandro', last_name: 'Coutinho', password: '1234')
-//		usuarioUser2.save(flush: true)
-//		
-//		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true)
-//		
-//		assert Usuario.count() == 5
-//		assert Perfil.count() == 3
-//		assert UsuarioPerfil.count() == 5
-//
-//	}
+	private void carregaDisciplinas(){
+		//Se for necessario dados especificos para producao, carregar aqui.
+		println "Carregando Disciplinas..."
+		
+		
+		 disciplina1 = new Disciplina(
+			nome:"Matemática").save(flush: true);
+		
+		 disciplina2 = new Disciplina(
+			nome:"Português").save(flush: true);
+		
+		 disciplina3 = new Disciplina(
+			nome:"Geografia").save(flush: true);
+		
+		def disciplina4 = new Disciplina(
+			nome:"História").save();
+		
+		def disciplina5 = new Disciplina(
+			nome:"Física").save();
+		
+		def disciplina6 = new Disciplina(
+			nome:"Química").save();
+		
+		def disciplina7 = new Disciplina(
+			nome:"Inglês").save();
+		
+		def disciplina8 = new Disciplina(
+			nome:"Espanhol").save();
+		
+		def disciplina9 = new Disciplina(
+			nome:"Filosofia").save();
+		
+		def disciplina10 = new Disciplina(
+			nome:"Literatura").save();
+		
+		def disciplina11 = new Disciplina(
+			nome:"Artes Plásticas").save();
+		
+		def disciplina12 = new Disciplina(
+			nome:"Artes Visuais").save();
+		
+		def disciplina13 = new Disciplina(
+			nome:"Artes Cênicas").save();
+		
+		def disciplina14 = new Disciplina(
+			nome:"Redação").save();
+		
+		def disciplina15 = new Disciplina(
+			nome:"Educação Física").save();
+		
+		def disciplina16 = new Disciplina(
+			nome:"Biologia").save();
+		
+		assert Disciplina.count() == 16
+			
+	}
 	
 	private void criarUsuarios()
 	{
 		println "Carregando usuarios..."
 				
-		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save()
-		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save()
-		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save()
+		def adminPerfil = new Perfil(authority: 'ROLE_ADMIN',descricao:"Administrador").save();
+		def professorPerfil = new Perfil(authority: 'ROLE_PROF',descricao:"Professor").save();
+		def usuarioComumPerfil = new Perfil(authority: 'ROLE_USER',descricao:"Aluno").save();
 		
 		
-		String password = springSecurityService.encodePassword('1234')
+//		String password = springSecurityService.encodePassword('1234')
 			
-		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', last_name: 'Passos', password: '1234')
-		adminUser.save()
+		adminUser = new Usuario(username: 'admin', enabled: true, email: 'admin@test.com', first_name: 'Andre', 
+			last_name: 'Passos', password: '1234', telefone_celular: '(61) 4545-2323',
+			telefone_fixo: '(61) 7878-9090', rg_numero: '5.567.756',cpf:'908.234.456-45', graduado: 1, sexo: 0);
+		adminUser.save(flush: true);
 		
-		UsuarioPerfil.create(adminUser, adminPerfil, true)
+		UsuarioPerfil.create(adminUser, adminPerfil, true);
 		
-		disciplina1 = new Disciplina(
-			nome:"Matemática").save();
-		
-		disciplina2 = new Disciplina(
-			nome:"Português").save();
-		
-		disciplina3 = new Disciplina(
-			nome:"Geografia").save();
-		
-		professorUser = new Usuario(username: 'professor',
+		professorUser = new Usuario(username: 'jean',
 			enabled: true,
-			email: 'professor@test.com',
+			email: 'jean@aulasexpress.com.br',
 			first_name: 'Jean',
 			last_name: 'Travassos',
 			password: '1234')
-		.addToDisciplinas(disciplina1)
+//		.addToDisciplinas(disciplina1)
 		.addToDisciplinas(disciplina2)
-		.save(flush: true)
+		.save(flush: true);
 //		professorUser.save(flush: true)
+		UsuarioPerfil.create(professorUser, professorPerfil, true);
 		
-		professorUser2 = new Usuario(username: 'professor2',
+		professorUser2 = new Usuario(username: 'felipe',
 			enabled: true,
-			email: 'professor2@test.com',
-			first_name: 'Tia Leo',
-			last_name: 'Travassos',
-			password: '1234')
+			email: 'felipe@aulasexpress.com.br',
+			first_name: 'Felipe',
+			last_name: 'Tavares',
+			password: '1234', telefone_celular: '(61) 7867-3456',
+			telefone_fixo: '(61) 1345-8565', rg_numero: '9.645.123',cpf:'457.365.134-05', graduado: 0, sexo: 0)
+		.addToDisciplinas(disciplina1)
 		.addToDisciplinas(disciplina3)
-		.save()
+		.save(flush: true);
 //		professorUser.save(flush: true)
-		
-		UsuarioPerfil.create(professorUser, professorPerfil, true)
-		UsuarioPerfil.create(professorUser2, professorPerfil, true)
+		UsuarioPerfil.create(professorUser2, professorPerfil, true);
 		
 
-		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@test.com', first_name: 'Thiago', last_name: 'Albuquerque', password: '1234')
-		usuarioUser.save()
+		usuarioUser = new Usuario(username: 'aluno', enabled: true, email: 'thiago@teste.com', 
+			first_name: 'Thiago', last_name: 'Albuquerque', password: '1234', telefone_celular: '(61) 8888-8888',
+			telefone_fixo: '(61) 4444-4444', escola_onde_estuda: 'Ideal', serie_cursando: '2 Ensino Médio',
+			rg_numero: '2.222.222',cpf:'444.333.222-11', graduado: 0, sexo: 0);
+		usuarioUser.save(flush: true);
 		
-		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true)
+		UsuarioPerfil.create(usuarioUser, usuarioComumPerfil, true);
 		
-		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'thiago@test.com', first_name: 'Leandro', last_name: 'Coutinho', password: '1234')
-		usuarioUser2.save()
+		usuarioUser2 = new Usuario(username: 'aluno2', enabled: true, email: 'leandro@teste.com', 
+			first_name: 'Leandro', last_name: 'Coutinho', password: '1234', telefone_celular: '(61) 7777-7777',
+			telefone_fixo: '(61) 5555-5555', escola_onde_estuda: 'Marista', serie_cursando: '3 Ensino Médio',
+			rg_numero: '3.333.333',cpf:'999.888.777-66', graduado: 0, sexo: 0);
+		usuarioUser2.save(flush: true);
 		
-		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true)
+		UsuarioPerfil.create(usuarioUser2, usuarioComumPerfil, true);
 		
-		assert Usuario.count() == 5
+		usuarioAndre = new Usuario(username: 'andre', enabled: true, email: 'andre@aulasexpress.com.br',
+			first_name: 'André', last_name: 'Sousa', password: '1234', telefone_celular: '(61) 9999-9999',
+			telefone_fixo: '(61) 3333-3333', escola_onde_estuda: 'Projeção', serie_cursando: '1 Ensino Médio',
+			rg_numero: '1.111.111',cpf:'111.222.333-44', graduado: 0, sexo: 0);
+		usuarioAndre.save(flush: true);
+		
+		UsuarioPerfil.create(usuarioAndre, usuarioComumPerfil, true);
+		
+		assert Usuario.count() == 6
 		assert Perfil.count() == 3
-		assert UsuarioPerfil.count() == 5
+		assert UsuarioPerfil.count() == 6
 
 	}
 	
@@ -246,7 +246,17 @@ class BootStrap {
 			valorAula:50.00,
 			observacao:"").save();
 		
-		assert Aula.count() == 3
+		def aula4 = new Aula(
+			cliente:usuarioAndre,
+			professor:professorUser,
+			data_hora:new Timestamp((new Date()).getTime()),
+			status:1,
+			quantidade_alunos:1,
+			quantidade_horas:2,
+			valorAula:50.00,
+			observacao:"").save();
+		
+		assert Aula.count() == 4
 	}
 	
 	private void carregaAvaliacao(){
@@ -267,59 +277,7 @@ class BootStrap {
 		assert Avaliacao.count() == 2
 	}
 	
-	private void carregaDisciplinas(){
-		//Se for necessario dados especificos para producao, carregar aqui.
-		println "Carregando Disciplinas..."
-		
-		
-		
-		def disciplina4 = new Disciplina(
-			nome:"História").save();
-		
-		def disciplina5 = new Disciplina(
-			nome:"Física").save();
-		
-		def disciplina6 = new Disciplina(
-			nome:"Química").save();
-		
-		def disciplina7 = new Disciplina(
-			nome:"Inglês").save();
-		
-		def disciplina8 = new Disciplina(
-			nome:"Espanhol").save();
-		
-		def disciplina9 = new Disciplina(
-			nome:"Filosofia").save();
-		
-		def disciplina10 = new Disciplina(
-			nome:"Literatura").save();
-		
-		def disciplina11 = new Disciplina(
-			nome:"Artes Plásticas").save();
-		
-		def disciplina12 = new Disciplina(
-			nome:"Artes Visuais").save();
-		
-		def disciplina13 = new Disciplina(
-			nome:"Artes Cênicas").save();
-		
-		def disciplina14 = new Disciplina(
-			nome:"Redação").save();
-		
-		def disciplina15 = new Disciplina(
-			nome:"Educação Física").save();
-		
-		def disciplina16 = new Disciplina(
-			nome:"Biologia").save();
-		
-		assert Disciplina.count() == 16
-		
-	//		carregaDadosDeDesenvolvimento();
-//		criarUsuarios();
-//		carregaDadosDeCredito();
-//		carregaDadosProfissionais();
-		
-	}
+	
 	
 	private void carregaDisponibilidade(){
 		println "Carregando Disponibilidades..."
@@ -338,16 +296,27 @@ class BootStrap {
 		
 		def experiencia1 = new Experiencia(
 			professor:professorUser,
-			formacao:"",
-			empregador_atual:"",
-			ocupacao:"",
-			postal_code:"",
-			endereco:"",
-			cidade:"",
-			estado:"",
-			telefone:"").save();
+			formacao:"Sistema de Informação",
+			empregador_atual:"CentroSoft APPS",
+			ocupacao:"Professor",
+			postal_code:"72.000-000",
+			endereco:"Samambaia",
+			cidade:"Samambaia Norte",
+			estado:"DF",
+			telefone:"(61) 9090-0909").save();
 		
-		assert Experiencia.count() == 1
+		def experiencia2 = new Experiencia(
+			professor:professorUser2,
+			formacao:"Endenharia Automotiva",
+			empregador_atual:"Aula Express LTDA",
+			ocupacao:"Professor",
+			postal_code:"72.000-000",
+			endereco:"Aguas Claras",
+			cidade:"Aguas Claras",
+			estado:"DF",
+			telefone:"(61) 9090-0909").save();
+		
+		assert Experiencia.count() == 2
 	}
 	
 	private void carregaHistorico(){
@@ -366,7 +335,7 @@ class BootStrap {
 			data_hora:new Timestamp((new Date()).getTime())).save();
 		
 		def historico3 = new Historico(
-			usuario:usuarioUser,
+			usuario:usuarioAndre,
 			acao:2,
 			status:2,
 			data_hora:new Timestamp((new Date()).getTime())).save();
@@ -379,12 +348,12 @@ class BootStrap {
 	}
 	
 	private void carregaDadosDeDesenvolvimento(){
+		carregaDisciplinas();
 		criarUsuarios();
 		carregaAdministracao();
 		carregaAulas();
-		carregaAvaliacao();
-		carregaDisciplinas();
-		carregaDisponibilidade();
+//		carregaAvaliacao();
+//		carregaDisponibilidade();
 		carregaExperiencia();
 		carregaHistorico();
 	}
