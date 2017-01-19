@@ -1,8 +1,10 @@
 package org.example
 
 import java.util.Date
+
 import aulas_express.Aula
 import aulas_express.Disciplina
+import aulas_express.Disponibilidade;
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 
@@ -40,8 +42,13 @@ class Usuario implements Serializable {
 	Date data_nascimento
 	Date rg_data_expedicao
 	
-	Integer graduado //0 = não, 1 = sim
+	Integer graduado //1 = não, 0 = sim
 	Integer sexo
+	
+	String cidade
+	String endereco
+	
+	Disponibilidade disponibilidade
 
 	Usuario(String username, String password) {
 		this()
@@ -94,6 +101,11 @@ class Usuario implements Serializable {
 		
 		graduado(nullable:true)
 		sexo(nullable:true)
+		
+		cidade(nullable:true)
+		endereco(nullable:true)
+		
+		disponibilidade(nullable:true)
 	}
 
 	static mapping = {
