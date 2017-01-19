@@ -58,12 +58,13 @@ environments {
 		// Config CTSOFT.COM.BR
 		dataSource {
 			pooled = true
+			readOnly = false
 //			dbCreate = "none" - create/create-drop/update
 			dbCreate = "create-drop"
 			url = "jdbc:mysql://mysql.ctsoft.com.br/ctsoft02?autoReconnect=true"
 			driverClassName = "com.mysql.jdbc.Driver"
 			dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-			username = "ctsoft02"
+			username = "ctsoft0202_add1"
 			password = "soft2011"
             properties {
                // See http://grails.org/doc/latest/guide/conf.html#dataSource for documentation

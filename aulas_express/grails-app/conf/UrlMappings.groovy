@@ -10,10 +10,13 @@ class UrlMappings {
 			}
 		}
 		"/administracoes"(resources:'administracao')
+		"/administracoes"(controller:"administracao", action:"calcularValorAula")
+		
 		"/usuarios"(resources:'cliente') {
 			"/aulas"(resources:"aula")
 		}
 		
+		"/aulas"(resources:"aula")
 		"/aulas"(controller:"aula", action:"aulasporcliente")
 		"/aulas"(controller:"aula", action:"aulasporprofessor")
 		
@@ -24,13 +27,18 @@ class UrlMappings {
 		  }
 		
 		"/usuarios"(controller:"usuario", action:"mylogin")
+		"/usuarios"(controller:"usuario", action:"disponibilidadeporidprofessor")
 		
 		"/usuarios"(resources:"usuario")
 		"/avaliacoes"(resources:'avaliacao')
 		"/disciplinas"(resources:'disciplina')
 		"/disponibilidades"(resources:'disponibilidade')
+		
 		"/experiencias"(resources:'experiencia')
+		"/experiencias"(controller:"experiencia", action:"experienciaporprofessor")
+		
 		"/historicos"(resources:'historico')
+		"/historicos"(controller:"historico", action:"historicosporusuario")
 		
 		"/"(view:"/index")
 		"500"(view:'/error')
