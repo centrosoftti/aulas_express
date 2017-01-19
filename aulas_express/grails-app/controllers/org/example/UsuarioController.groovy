@@ -5,7 +5,12 @@ package org.example
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.transaction.Transactional
+
+import java.sql.Timestamp
+
 import aulas_express.Disciplina
+import aulas_express.Disponibilidade;
+import aulas_express.DisponibilidadeController;
 
 @Transactional(readOnly = true)
 class UsuarioController {
@@ -24,8 +29,18 @@ class UsuarioController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
+	
+	@Transactional
     def create() {
-        respond new Usuario(params)
+		
+		def usuario = new Usuario(params);
+		
+		def perfil = Perfil.get(3);
+		if(params.perfilUsuario)
+			perfil = Perfil.get(params.perfilUsuario)
+		
+		println "Perfil: ${perfil}"
+        respond save(usuario, perfil)
     }
 
 	def professorespordisciplina() {
@@ -59,11 +74,16 @@ class UsuarioController {
 	}
 	
     @Transactional
-    def save(Usuario usuarioInstance) {
+    def save(Usuario usuarioInstance, Perfil perfilInstance) {
         if (usuarioInstance == null) {
             notFound()
             return
         }
+		
+		if (perfilInstance == null) {
+			notFound()
+			return
+		}
 
         if (usuarioInstance.hasErrors()) {
             respond usuarioInstance.errors, view:'create'
@@ -71,7 +91,18 @@ class UsuarioController {
         }
 
         usuarioInstance.save flush:true
+		
+		println "PerfilInstance: ${perfilInstance}"
+		println "UsuarioInstance: ${usuarioInstance}"
 
+		UsuarioPerfil.create(usuarioInstance, perfilInstance, true);
+		
+		if(perfilInstance.authority == 'ROLE_PROF')
+		{	
+			DisponibilidadeController disponibilidadeController = new DisponibilidadeController()
+			disponibilidadeController.createDisponibilidade(usuarioInstance.id)
+		}
+		
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
@@ -84,10 +115,21 @@ class UsuarioController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
+	
+	@Transactional
     def edit(Usuario usuarioInstance) {
 		println "Entrei editar professor com disciplina..."
 		println "Params: ${params}"
 		println "UsuarioInstance: ${usuarioInstance}"
+		
+		
+		usuarioInstance.properties = params
+		
+		if(params.dataNascimentoLong){
+			usuarioInstance.data_nascimento = new Timestamp(params.dataNascimentoLong.toLong())
+			println "Data Convertida: $usuarioInstance.data_nascimento}"
+		}
+		
 		if (params.disciplinas)
 		{
 			params.disciplinas.each {idDisciplina ->
@@ -103,11 +145,13 @@ class UsuarioController {
 			}
 		}
 		
+
         respond update(usuarioInstance)
     }
 
     @Transactional
     def update(Usuario usuarioInstance) {
+		println "Entrei update do Usuario..."
         if (usuarioInstance == null) {
             notFound()
             return
@@ -127,6 +171,8 @@ class UsuarioController {
             }
             '*'{ respond usuarioInstance, [status: OK] }
         }
+		
+		println "Salvou UsuarioInstance editado: ${usuarioInstance}"
 		
 		def jsonResponse = ['response':['status':0,'data':usuarioInstance]]
 		render jsonResponse as JSON
@@ -182,15 +228,64 @@ class UsuarioController {
 		println "Usuarios: ${usuarios}"
 		
 		def retorno = []
-		usuarios.each {use ->
+		usuarios.each {usuario ->
 			retorno.add(
 				[
-					"id":use.id,
-					"username":use.username,
-					"nome_usuario":use.first_name + ' ' + use.last_name,
+					"id":usuario.id,
+					"username":usuario.username,
+					"nome_usuario":usuario.first_name + ' ' + usuario.last_name,
+					"perfil": usuario.getAuthorities()
 				]
 			)
 		}
+		println "Retorno: ${retorno}"
+		def jsonResponse = ['response':['status':0,'data':retorno]]
+		render jsonResponse as JSON
+		respond jsonResponse
+	}
+	
+	@Transactional
+	def disponibilidadeporidprofessor()
+	{
+		println "Entrei nas disponibilidades por id professor..."
+		println request.method
+		println "Params: ${params}"
+		
+		def disponibilidades = null
+		def usuarioLogado = null
+		if(params.idUsuario)
+		{
+			println "Entrei nas params disponibilidades por id professor..."
+			
+			usuarioLogado = Usuario.get(params.idUsuario)
+			
+		}
+		def retorno = []
+		if(usuarioLogado)
+		{
+			if(!usuarioLogado.disponibilidade)
+			{
+				Disponibilidade novaDisponibilidade = new Disponibilidade()
+				novaDisponibilidade.ativo = 0
+				novaDisponibilidade.save flush:true
+				
+				usuarioLogado.disponibilidade = novaDisponibilidade
+				usuarioLogado.save flush:true
+			}
+			
+			retorno.add(
+				[
+					"id": usuarioLogado.disponibilidade.id,
+					"ativo":usuarioLogado.disponibilidade.ativo,
+					"latitude":usuarioLogado.disponibilidade.latitude,
+					"longitude":usuarioLogado.disponibilidade.longitude,
+					"cidade":usuarioLogado.disponibilidade.cidade
+				]
+			)
+		}
+		
+		println "Disponibilidade por ID Professor: ${disponibilidades}"
+		
 		println "Retorno: ${retorno}"
 		def jsonResponse = ['response':['status':0,'data':retorno]]
 		render jsonResponse as JSON
