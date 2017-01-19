@@ -20,15 +20,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: historicoInstance, field: 'status', 'error')} required">
-	<label for="status">
-		<g:message code="historico.status.label" default="Status" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="status" type="number" value="${historicoInstance.status}" required=""/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: historicoInstance, field: 'data_hora', 'error')} required">
 	<label for="data_hora">
 		<g:message code="historico.data_hora.label" default="Datahora" />

@@ -41,14 +41,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${historicoInstance?.status}">
-				<li class="fieldcontain">
-					<span id="status-label" class="property-label"><g:message code="historico.status.label" default="Status" /></span>
-					
-						<span class="property-value" aria-labelledby="status-label"><g:fieldValue bean="${historicoInstance}" field="status"/></span>
-					
-				</li>
-				</g:if>
 			
 				<g:if test="${historicoInstance?.data_hora}">
 				<li class="fieldcontain">

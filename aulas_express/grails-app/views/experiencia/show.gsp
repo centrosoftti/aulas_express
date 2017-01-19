@@ -59,14 +59,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${experienciaInstance?.postal_code}">
-				<li class="fieldcontain">
-					<span id="postal_code-label" class="property-label"><g:message code="experiencia.postal_code.label" default="Postalcode" /></span>
-					
-						<span class="property-value" aria-labelledby="postal_code-label"><g:fieldValue bean="${experienciaInstance}" field="postal_code"/></span>
-					
-				</li>
-				</g:if>
 			
 				<g:if test="${experienciaInstance?.endereco}">
 				<li class="fieldcontain">
@@ -104,23 +96,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${experienciaInstance?.latitude}">
-				<li class="fieldcontain">
-					<span id="latitude-label" class="property-label"><g:message code="experiencia.latitude.label" default="Latitude" /></span>
-					
-						<span class="property-value" aria-labelledby="latitude-label"><g:fieldValue bean="${experienciaInstance}" field="latitude"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${experienciaInstance?.longitude}">
-				<li class="fieldcontain">
-					<span id="longitude-label" class="property-label"><g:message code="experiencia.longitude.label" default="Longitude" /></span>
-					
-						<span class="property-value" aria-labelledby="longitude-label"><g:fieldValue bean="${experienciaInstance}" field="longitude"/></span>
-					
-				</li>
-				</g:if>
 			
 			</ol>
 			<g:form url="[resource:experienciaInstance, action:'delete']" method="DELETE">

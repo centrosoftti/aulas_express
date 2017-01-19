@@ -32,8 +32,6 @@
 					
 						<g:sortableColumn property="ocupacao" title="${message(code: 'experiencia.ocupacao.label', default: 'Ocupacao')}" />
 					
-						<g:sortableColumn property="postal_code" title="${message(code: 'experiencia.postal_code.label', default: 'Postalcode')}" />
-					
 						<g:sortableColumn property="endereco" title="${message(code: 'experiencia.endereco.label', default: 'Endereco')}" />
 					
 					</tr>
@@ -49,8 +47,6 @@
 						<td>${fieldValue(bean: experienciaInstance, field: "empregador_atual")}</td>
 					
 						<td>${fieldValue(bean: experienciaInstance, field: "ocupacao")}</td>
-					
-						<td>${fieldValue(bean: experienciaInstance, field: "postal_code")}</td>
 					
 						<td>${fieldValue(bean: experienciaInstance, field: "endereco")}</td>
 					

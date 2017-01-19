@@ -23,15 +23,6 @@
 			</g:if>
 			<ol class="property-list disponibilidade">
 			
-				<g:if test="${disponibilidadeInstance?.professor}">
-				<li class="fieldcontain">
-					<span id="professor-label" class="property-label"><g:message code="disponibilidade.professor.label" default="Professor" /></span>
-					
-						<span class="property-value" aria-labelledby="professor-label"><g:link controller="usuario" action="show" id="${disponibilidadeInstance?.professor?.id}">${disponibilidadeInstance?.professor?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${disponibilidadeInstance?.ativo}">
 				<li class="fieldcontain">
 					<span id="ativo-label" class="property-label"><g:message code="disponibilidade.ativo.label" default="Ativo" /></span>

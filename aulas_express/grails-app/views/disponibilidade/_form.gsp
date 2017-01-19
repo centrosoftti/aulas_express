@@ -2,14 +2,6 @@
 
 
 
-<div class="fieldcontain ${hasErrors(bean: disponibilidadeInstance, field: 'professor', 'error')} required">
-	<label for="professor">
-		<g:message code="disponibilidade.professor.label" default="Professor" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:select id="professor" name="professor.id" from="${org.example.Usuario.list()}" optionKey="id" required="" value="${disponibilidadeInstance?.professor?.id}" class="many-to-one"/>
-
-</div>
 
 <div class="fieldcontain ${hasErrors(bean: disponibilidadeInstance, field: 'ativo', 'error')} required">
 	<label for="ativo">

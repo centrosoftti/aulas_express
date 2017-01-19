@@ -38,15 +38,6 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: experienciaInstance, field: 'postal_code', 'error')} ">
-	<label for="postal_code">
-		<g:message code="experiencia.postal_code.label" default="Postalcode" />
-		
-	</label>
-	<g:textField name="postal_code" value="${experienciaInstance?.postal_code}"/>
-
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: experienciaInstance, field: 'endereco', 'error')} ">
 	<label for="endereco">
 		<g:message code="experiencia.endereco.label" default="Endereco" />
@@ -83,21 +74,4 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: experienciaInstance, field: 'latitude', 'error')} required">
-	<label for="latitude">
-		<g:message code="experiencia.latitude.label" default="Latitude" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="latitude" type="number" value="${experienciaInstance.latitude}" required=""/>
-
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: experienciaInstance, field: 'longitude', 'error')} required">
-	<label for="longitude">
-		<g:message code="experiencia.longitude.label" default="Longitude" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="longitude" type="number" value="${experienciaInstance.longitude}" required=""/>
-
-</div>
 

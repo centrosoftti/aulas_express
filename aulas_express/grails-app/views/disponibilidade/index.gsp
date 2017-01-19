@@ -24,7 +24,6 @@
 			<thead>
 					<tr>
 					
-						<th><g:message code="disponibilidade.professor.label" default="Professor" /></th>
 					
 						<g:sortableColumn property="ativo" title="${message(code: 'disponibilidade.ativo.label', default: 'Ativo')}" />
 					
@@ -37,8 +36,6 @@
 				<tbody>
 				<g:each in="${disponibilidadeInstanceList}" status="i" var="disponibilidadeInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
-					
-						<td><g:link action="show" id="${disponibilidadeInstance.id}">${fieldValue(bean: disponibilidadeInstance, field: "professor")}</g:link></td>
 					
 						<td>${fieldValue(bean: disponibilidadeInstance, field: "ativo")}</td>
 					

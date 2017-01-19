@@ -28,8 +28,6 @@
 					
 						<g:sortableColumn property="acao" title="${message(code: 'historico.acao.label', default: 'Acao')}" />
 					
-						<g:sortableColumn property="status" title="${message(code: 'historico.status.label', default: 'Status')}" />
-					
 						<g:sortableColumn property="data_hora" title="${message(code: 'historico.data_hora.label', default: 'Datahora')}" />
 					
 					</tr>
@@ -41,8 +39,6 @@
 						<td><g:link action="show" id="${historicoInstance.id}">${fieldValue(bean: historicoInstance, field: "usuario")}</g:link></td>
 					
 						<td>${fieldValue(bean: historicoInstance, field: "acao")}</td>
-					
-						<td>${fieldValue(bean: historicoInstance, field: "status")}</td>
 					
 						<td><g:formatDate date="${historicoInstance.data_hora}" /></td>
 					
