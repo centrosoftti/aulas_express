@@ -6,16 +6,18 @@ class Historico {
 	Usuario usuario
 	
 	Integer acao
-	Integer status
 
 	Date data_hora
+	
+	String idAula
 	
     static constraints = {
 		
 		usuario(nullable:false)
 		acao(nullable:false)
-		status(nullable:false)
 		
 		data_hora(nullable:false)
+		
+		idAula(nullable:true)
     }
 }

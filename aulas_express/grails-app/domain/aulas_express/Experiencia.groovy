@@ -14,6 +14,7 @@ class Experiencia {
 	String cidade
 	String estado
 	String telefone
+	String apresentacao
 	
     static constraints = {
 		professor(nullable:false)
@@ -26,5 +27,6 @@ class Experiencia {
 		cidade(nullable:true)
 		estado(nullable:true)
 		telefone(nullable:true)
+		apresentacao(nullable:true , type: "text")
     }
 }

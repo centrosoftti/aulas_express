@@ -1,19 +1,17 @@
 package aulas_express
 
-import org.example.Usuario
-
 class Disponibilidade {
 
-	Usuario professor
-	Integer ativo
+	Integer ativo // 0 - Inativo / 1 - Ativo 
 	double latitude
 	double longitude
+	String cidade
 	
     static constraints = {
 		
-		professor(nullable:false)
 		ativo(nullable:false)
-		latitude(nullable:false)
-		longitude(nullable:false)
+		latitude(nullable:true)
+		longitude(nullable:true)
+		cidade(nullable:true)
     }
 }

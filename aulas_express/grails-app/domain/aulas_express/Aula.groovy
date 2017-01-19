@@ -18,6 +18,13 @@ class Aula {
 	
 	String observacao
 	
+	Disciplina disciplina
+	
+	double latitude
+	double longitude
+		
+	String endereco
+	
 	static constraints = {
 		
 		//campos obrigatórios
@@ -30,8 +37,17 @@ class Aula {
 		
 		valorAula(nullable:false)
 		
+		disciplina(nullable:false)
+		
+		latitude(nullable:false)
+		longitude(nullable:false)
+		
 		//campos não obrigatórios
 		observacao(nullable:true)
+		
+		endereco(nullable:true)
+		
+		
 
 	}
 }
