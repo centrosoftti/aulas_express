@@ -3,7 +3,12 @@ package aulas_express
 
 
 import static org.springframework.http.HttpStatus.*
+import enums.AcoesHistoricoEnum;
+import grails.converters.JSON
 import grails.transaction.Transactional
+import org.example.Usuario
+
+import java.sql.Timestamp
 
 @Transactional(readOnly = true)
 class HistoricoController {
@@ -16,9 +21,36 @@ class HistoricoController {
     def show(Historico historicoInstance) {
         respond historicoInstance
     }
+	
+	@Transactional
     def create() {
-        respond new Historico(params)
+		
+		def historico = new Historico(params)
+		
+		if(params.idUsuario)
+			historico.usuario = Usuario.get(params.idUsuario)
+			
+		historico.data_hora = new Timestamp(data.getTime())
+		historico.acao = AcoesHistoricoEnum.ALS.ordinal()
+		historico.idAula = params.idAula
+		
+        respond save(historico)
     }
+	
+	@Transactional
+	def createHistoricoComParametros(long idUsuario, long idAula) {
+		
+		def historico = new Historico()
+		
+		if(idUsuario)
+			historico.usuario = Usuario.get(idUsuario)
+			
+		historico.data_hora = new Timestamp((new Date()).getTime())
+		historico.acao = AcoesHistoricoEnum.ALS.ordinal()
+		historico.idAula = idAula
+		
+		respond save(historico)
+	}
 
     @Transactional
     def save(Historico historicoInstance) {
@@ -96,4 +128,38 @@ class HistoricoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def historicosporusuario() {
+		println "Entrei nos historicos por cliente..."
+		println request.method
+		println "Params: ${params}"
+		
+		def historicos = null
+		if(params.idUsuario)
+		{
+			println "Entrei nas params historicos..."
+			def h = Historico.createCriteria()
+			historicos = h{
+				if (params.idUsuario)
+					eq("usuario.id", params.idUsuario.toLong())
+			}
+		}
+		println "HistoricoPorUsuario: ${historicos}"
+		
+		def retorno = []
+		historicos.each {his ->
+			retorno.add(
+				[
+					"usuario":his.usuario,
+					"acao":his.acao,
+					"data_hora":his.data_hora,
+					"idAula": his.idAula
+				]
+			)
+		}
+		println "Retorno: ${retorno}"
+		def jsonResponse = ['response':['status':0,'data':retorno]]
+		render jsonResponse as JSON
+		respond jsonResponse
+	}
 }

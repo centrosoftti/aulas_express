@@ -48,12 +48,21 @@ class AdministracaoController {
 		respond jsonResponse
     }
 
+	@Transactional
     def edit(Administracao administracaoInstance) {
+		println "Entrei editar Administracao..."
+		println "Params: ${params}"
+		println "AdministracaoInstance: ${administracaoInstance}"
+		
+		administracaoInstance.properties = params
+		
         respond administracaoInstance
     }
 
     @Transactional
     def update(Administracao administracaoInstance) {
+		println "Entrei no update da Administracao..."
+		
         if (administracaoInstance == null) {
             notFound()
             return
@@ -73,6 +82,9 @@ class AdministracaoController {
             }
             '*'{ respond administracaoInstance, [status: OK] }
         }
+		
+		println "Salvou administracaoInstance editada: ${administracaoInstance}"
+		
 		def jsonResponse = ['response':['status':0,'data':administracaoInstance]]
 		render jsonResponse as JSON
 		respond jsonResponse
@@ -105,4 +117,41 @@ class AdministracaoController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def calcularValorAula(){
+		println "Entrei no calcular valor aula..."
+		println "Params: ${params}"
+		
+		def valorTotal = null
+		def administracao = Administracao.get(1)
+		println "Administracao carregada: ${administracao}"
+		
+		if(administracao != null)
+		{
+			def valorAula = 0
+			
+			println "calcularValorAula graduado: ${params.graduado}"
+			println "calcularValorAula graduado.toInteger: ${params.graduado.toInteger()}"
+			
+			if(params.graduado.toInteger() == 1)
+			{
+				valorAula = administracao.valorAulaNaoGraduado
+			}
+			else if(params.graduado.toInteger() == 0)
+			{
+				valorAula = administracao.valorAulaGraduado
+			}
+			
+			println "calcularValorAula valorAula: ${valorAula}"
+			println "calcularValorAula quantidadeAlunos: ${params.quantidadeAlunos.toInteger()}"
+			println "calcularValorAula quantidadeHoras: ${params.quantidadeHoras.toInteger()}"
+			
+			valorTotal = valorAula * params.quantidadeAlunos.toInteger() * params.quantidadeHoras.toInteger()
+		}
+		
+		def jsonResponse = ['response':['status':0,'data':valorTotal]]
+		render jsonResponse as JSON
+		respond jsonResponse
+
+	}
 }

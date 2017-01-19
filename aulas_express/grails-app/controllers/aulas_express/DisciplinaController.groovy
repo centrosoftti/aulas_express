@@ -12,7 +12,7 @@ class DisciplinaController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 30, 100)
         
 		def jsonResponse = ['response':['status':0,'data':Disciplina.list(params), model:[disciplinaInstanceCount: Disciplina.count()]]]
 		render jsonResponse as JSON
@@ -26,6 +26,7 @@ class DisciplinaController {
 //        respond disciplinaInstance
     }
 
+	@Transactional
     def create() {
         respond save(new Disciplina(params))
     }

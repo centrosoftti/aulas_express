@@ -6,6 +6,8 @@ import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.transaction.Transactional
 import java.sql.Timestamp
+import java.text.ParsePosition
+import java.text.SimpleDateFormat
 import org.example.Usuario
 
 @Transactional(readOnly = true)
@@ -26,6 +28,8 @@ class AulaController {
 		respond jsonResponse
 //        respond aulaInstance
     }
+	
+	@Transactional
     def create() {
 //		respond new Aula(params)
 	
@@ -35,16 +39,18 @@ class AulaController {
 			aula.cliente = Usuario.get(params.idCliente)
 		if(params.idProfessor)
 			aula.professor = Usuario.get(params.idProfessor)
-			
-		aula.data_hora = new Timestamp((new Date()).getTime())
-//		aula.status = params.status
-//		aula.quantidade_alunos = params.quantidade_alunos
-//		aula.quantidade_horas = params.quantidade_horas
-//		aula.valorAula = params.valorAula
-//		aula.observacao = params.observacao
+		if(params.idDisciplina)
+			aula.disciplina = Disciplina.get(params.idDisciplina)
+		
+		if(params.dataHoraIndex){
+			aula.data_hora = new Timestamp(params.dataHoraIndex.toLong())
+			println "Data Convertida: ${aula.data_hora}"
+		}
+		
 		
         respond save(aula)
     }
+	
 	def aulasporcliente() {
 		println "Entrei nas aulas por cliente..."
 		println request.method
@@ -69,12 +75,13 @@ class AulaController {
 				[
 					"id":apc.id,
 					"nome_cliente":apc.cliente.first_name + ' ' + apc.cliente.last_name,
-					"nome_professor":apc.professor.first_name + ' ' + apc.professor.last_name,
+					"nome_professor":(apc.professor != null) ?  apc.professor.first_name + ' ' + apc.professor.last_name : " ",
 					"data_hora":apc.data_hora,
 					"status":apc.status,
 					"quantidade_alunos":apc.quantidade_alunos,
 					"quantidade_horas":apc.quantidade_horas,
 					"valorAula":apc.valorAula,
+					"disciplina": apc.disciplina.nome,
 					"observacao":apc.observacao
 				]
 			)
@@ -114,6 +121,7 @@ class AulaController {
 					"quantidade_alunos":app.quantidade_alunos,
 					"quantidade_horas":app.quantidade_horas,
 					"valorAula":app.valorAula,
+					"disciplina": app.disciplina.nome,
 					"observacao":app.observacao
 				]
 			)
@@ -139,6 +147,11 @@ class AulaController {
         }
 
         aulaInstance.save flush:true
+		
+		println "Tentando criar o historico..."
+		HistoricoController historicoController = new HistoricoController()
+		historicoController.createHistoricoComParametros(aulaInstance.cliente.id, aulaInstance.id)
+		
 
         request.withFormat {
             form multipartForm {
@@ -152,12 +165,22 @@ class AulaController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
+	
+	@Transactional
     def edit(Aula aulaInstance) {
-        respond aulaInstance
+		println "Entrei no editar Aula..."
+		println "Params: ${params}"
+		println "AulaInstance: ${aulaInstance}"
+		
+		aulaInstance.properties = params
+		
+		respond update(aulaInstance)
     }
 
     @Transactional
     def update(Aula aulaInstance) {
+		println "Entrei update do Aula..."
+		
         if (aulaInstance == null) {
             notFound()
             return

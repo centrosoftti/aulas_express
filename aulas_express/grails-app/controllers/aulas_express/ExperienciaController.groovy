@@ -5,6 +5,7 @@ package aulas_express
 import static org.springframework.http.HttpStatus.*
 import grails.converters.JSON
 import grails.transaction.Transactional
+
 import org.example.Usuario
 
 @Transactional(readOnly = true)
@@ -17,8 +18,12 @@ class ExperienciaController {
         respond Experiencia.list(params), model:[experienciaInstanceCount: Experiencia.count()]
     }
     def show(Experiencia experienciaInstance) {
-        respond experienciaInstance
+		def jsonResponse = ['response':['status':0,'data':experienciaInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
+	
+	@Transactional
     def create() {
 		
 		def experiencia = new Experiencia(params)
@@ -56,12 +61,22 @@ class ExperienciaController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
+	
+	@Transactional
     def edit(Experiencia experienciaInstance) {
-        respond experienciaInstance
+		println "Entrei editar Experiencia..."
+		println "Params: ${params}"
+		println "ExperienciaInstance: ${experienciaInstance}"
+		
+		experienciaInstance.properties = params
+		
+        respond update(experienciaInstance)
     }
 
     @Transactional
     def update(Experiencia experienciaInstance) {
+		println "Entrei no update da Experiencia..."
+		
         if (experienciaInstance == null) {
             notFound()
             return
@@ -81,6 +96,8 @@ class ExperienciaController {
             }
             '*'{ respond experienciaInstance, [status: OK] }
         }
+		
+		println "Salvou experienciaInstance editada: ${experienciaInstance}"
 		
 		def jsonResponse = ['response':['status':0,'data':experienciaInstance]]
 		render jsonResponse as JSON
@@ -114,4 +131,46 @@ class ExperienciaController {
             '*'{ render status: NOT_FOUND }
         }
     }
+	
+	def experienciaporprofessor()
+	{
+		println "Entrei nas experiencias por id professor..."
+		println request.method
+		println "Params: ${params}"
+		
+		def experiencias = null
+		if(params.idUsuario)
+		{
+			println "Entrei nas params experiencias por id professor..."
+			def e = Experiencia.createCriteria()
+			experiencias = e{
+				if (params.idUsuario)
+					eq("professor.id", params.idUsuario.toLong())
+			}
+		}
+		println "Experiencia por ID Professor: ${experiencias}"
+		
+		def retorno = []
+		experiencias.each {exp ->
+			retorno.add(
+				[
+					"id": exp.id,
+					"professor":exp.professor,
+					"formacao":exp.formacao,
+					"empregador_atual":exp.empregador_atual,
+					"ocupacao":exp.ocupacao,
+					"postal_code": exp.postal_code,
+					"endereco": exp.endereco,
+					"cidade": exp.cidade,
+					"estado": exp.estado,
+					"telefone": exp.telefone,
+					"apresentacao": exp.apresentacao
+				]
+			)
+		}
+		println "Retorno: ${retorno}"
+		def jsonResponse = ['response':['status':0,'data':retorno]]
+		render jsonResponse as JSON
+		respond jsonResponse
+	}
 }

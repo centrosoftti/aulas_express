@@ -18,6 +18,8 @@ class AvaliacaoController {
     def show(Avaliacao avaliacaoInstance) {
         respond avaliacaoInstance
     }
+	
+	@Transactional
     def create() {
 		def avaliacao = new Avaliacao(params)
 		

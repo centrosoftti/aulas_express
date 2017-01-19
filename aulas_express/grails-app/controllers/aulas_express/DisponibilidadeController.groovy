@@ -16,8 +16,12 @@ class DisponibilidadeController {
         respond Disponibilidade.list(params), model:[disponibilidadeInstanceCount: Disponibilidade.count()]
     }
     def show(Disponibilidade disponibilidadeInstance) {
-        respond disponibilidadeInstance
+        def jsonResponse = ['response':['status':0,'data':disponibilidadeInstance]]
+		render jsonResponse as JSON
+		respond jsonResponse
     }
+	
+	@Transactional
     def create() {
 		def disponibilidade = new Disponibilidade(params)
 		
@@ -27,6 +31,21 @@ class DisponibilidadeController {
 		respond save(disponibilidade)
 //        respond new Disponibilidade(params)
     }
+	
+	@Transactional
+	def createDisponibilidade(long idProfessor) {
+		def disponibilidade = new Disponibilidade(params)
+		
+		if(idProfessor)
+			disponibilidade.professor = Usuario.get(idProfessor)
+		
+		disponibilidade.ativo = 0
+		disponibilidade.latitude = -15.874205
+		disponibilidade.longitude = -48.088954
+		
+		respond save(disponibilidade)
+//        respond new Disponibilidade(params)
+	}
 
     @Transactional
     def save(Disponibilidade disponibilidadeInstance) {
@@ -54,12 +73,22 @@ class DisponibilidadeController {
 		render jsonResponse as JSON
 		respond jsonResponse
     }
+	
+	@Transactional
     def edit(Disponibilidade disponibilidadeInstance) {
-        respond disponibilidadeInstance
+		println "Entrei no editar Disponibilidade..."
+		println "Params: ${params}"
+		println "DisponibilidadeInstance: ${disponibilidadeInstance}"
+		
+		disponibilidadeInstance.properties = params
+		
+        respond update(disponibilidadeInstance)
     }
 
     @Transactional
     def update(Disponibilidade disponibilidadeInstance) {
+		println "Entrei update do Disponibilidade..."
+		
         if (disponibilidadeInstance == null) {
             notFound()
             return
@@ -79,6 +108,8 @@ class DisponibilidadeController {
             }
             '*'{ respond disponibilidadeInstance, [status: OK] }
         }
+		
+		println "Salvou disponibilidadeInstance editada: ${disponibilidadeInstance}"
 		
 		def jsonResponse = ['response':['status':0,'data':disponibilidadeInstance]]
 		render jsonResponse as JSON
